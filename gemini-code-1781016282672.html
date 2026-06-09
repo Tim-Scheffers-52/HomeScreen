@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - De Eendragt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-navy: #0f2c59;       /* De diepblauwe kleur van de schoolsite */
+            --text-dark: #334155;          /* Comfortabele donkere tekstkleur */
+            --bg-light: #f8fafc;           /* Zachtgrijze achtergrond voor de kaarten */
+            --border-color: #e2e8f0;       /* Lichte randjes voor structuur */
+            
+            /* Accentuiterende kleuren geïnspireerd op de schoolthemas */
+            --color-lef: #f97316;          /* Oranje */
+            --color-liefde: #ef4444;       /* Warm rood */
+            --color-leren: #0ea5e9;        /* Helder blauw */
+            --color-leuk: #10b981;         /* Fris groen */
+            --color-agenda: #4338ca;       /* Indigo */
+            --color-faqta: #7c3aed;        /* Paars */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f1f5f9; /* Subtiele lichtgrijze achtergrond voor de hele pagina */
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* De prachtige donkerblauwe topbalk (exact zoals het screenshot) */
+        .top-navbar {
+            background-color: var(--primary-navy);
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .brand-container {
+            color: #ffffff;
+        }
+
+        .brand-container h1 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.2rem;
+        }
+
+        .brand-container p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        /* Gepersonaliseerde profielfoto rechtsboven */
+        .profile-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            background-color: #cbd5e1; /* Placeholder kleur mocht de foto laden */
+        }
+
+        /* Content container voor de app-grid */
+        .main-content {
+            width: 100%;
+            max-width: 1200px;
+            padding: 3rem 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* De Grid voor de apps */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        /* De App Kaarten */
+        .app-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.25s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Hover effecten */
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        /* Gekleurde indicatiestrip aan de bovenkant */
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            transition: height 0.2s ease;
+        }
+
+        .app-card:hover::before {
+            height: 12px;
+        }
+
+        /* Specifieke stripkleuren per app */
+        .card-snappet::before { background-color: var(--color-lef); }
+        .card-agenda::before { background-color: var(--color-agenda); }
+        .card-kanjer::before { background-color: var(--color-liefde); }
+        .card-spelling::before { background-color: var(--color-leren); }
+        .card-taal::before { background-color: var(--color-leuk); }
+        .card-faqta::before { background-color: var(--color-faqta); }
+        .card-plus::before { background-color: #94a3b8; }
+
+        /* Icoontjes styling */
+        .app-icon {
+            font-size: 3.2rem;
+            margin-bottom: 1.2rem;
+            transition: transform 0.2s ease;
+        }
+
+        .app-card:hover .app-icon {
+            transform: scale(1.08);
+        }
+
+        /* Icoon kleuren */
+        .card-snappet .app-icon { color: var(--color-lef); }
+        .card-agenda .app-icon { color: var(--color-agenda); }
+        .card-kanjer .app-icon { color: var(--color-liefde); }
+        .card-spelling .app-icon { color: var(--color-leren); }
+        .card-taal .app-icon { color: var(--color-leuk); }
+        .card-faqta .app-icon { color: var(--color-faqta); }
+        .card-plus .app-icon { color: #94a3b8; }
+
+        /* App Titel styling */
+        .app-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            text-align: center;
+        }
+
+        /* "Later toevoegen" placeholder */
+        .app-card.card-plus {
+            border: 2px dashed #cbd5e1;
+            background-color: transparent;
+            box-shadow: none;
+            cursor: pointer;
+        }
+
+        .app-card.card-plus:hover {
+            background-color: #ffffff;
+            border-style: solid;
+        }
+
+        .card-plus .app-title {
+            color: #64748b;
+        }
+
+        /* Responsive design voor mobiel/tablet */
+        @media (max-width: 768px) {
+            .top-navbar { padding: 1.2rem 1.5rem; flex-direction: column; text-align: center; gap: 1rem; }
+            .dashboard-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <div class="brand-container">
+            <h1>CBS De Eendragt</h1>
+            <p>Lef • Liefde • Leren • Leuk</p>
+        </div>
+        <div class="profile-area">
+            <img src="profiel.jpg" alt="Meester Tim" class="profile-avatar" onerror="this.style.display='none'; alert('Tip: Upload ook je foto als profiel.jpg naar GitHub om deze rechtsboven te zien!')">
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="dashboard-grid">
+            
+            <a href="https://teacher.snappet.org" target="_blank" class="app-card card-snappet">
+                <i class="fa-solid fa-graduation-cap app-icon"></i>
+                <span class="app-title">Snappet</span>
+            </a>
+
+            <a href="https://calendar.google.com" target="_blank" class="app-card card-agenda">
+                <i class="fa-regular fa-calendar-days app-icon"></i>
+                <span class="app-title">Google Agenda</span>
+            </a>
+
+            <a href="https://www.kanjertraining.nl" target="_blank" class="app-card card-kanjer">
+                <i class="fa-solid fa-user-group app-icon"></i>
+                <span class="app-title">Kanjertraining</span>
+            </a>
+
+            <a href="https://www.spellingoefenen.nl" target="_blank" class="app-card card-spelling">
+                <i class="fa-solid fa-spell-check app-icon"></i>
+                <span class="app-title">Spellingoefenen</span>
+            </a>
+
+            <a href="https://www.taaloefenen.nl" target="_blank" class="app-card card-taal">
+                <i class="fa-solid fa-language app-icon"></i>
+                <span class="app-title">Taaloefenen</span>
+            </a>
+
+            <a href="https://www.faqta.nl" target="_blank" class="app-card card-faqta">
+                <i class="fa-solid fa-compass app-icon"></i>
+                <span class="app-title">Faqta</span>
+            </a>
+
+            <div class="app-card card-plus" onclick="alert('Hier kun je later via de code extra links toevoegen!')">
+                <i class="fa-solid fa-circle-plus app-icon"></i>
+                <span class="app-title">App toevoegen</span>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
