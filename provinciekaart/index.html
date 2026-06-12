@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactieve kaart - Nederlandse provincies</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="panel">
+      <div>
+        <p class="eyebrow">Oefenen</p>
+        <h1>De Nederlandse provincies</h1>
+        <p class="intro">Klik op een gekleurde knop in de provincie. De naam verschijnt. Klik nog een keer om de naam te verbergen.</p>
+      </div>
+      <button id="reset" type="button">Wis alle namen</button>
+    </section>
+
+    <section class="map-card" aria-label="Interactieve kaart van Nederland">
+      <svg id="map" viewBox="0 0 840 930" role="img" aria-labelledby="titel beschrijving">
+        <title id="titel">Interactieve kaart van de Nederlandse provincies</title>
+        <desc id="beschrijving">Kaart met duidelijke klikknoppen in iedere provincie. Klik op een knop om de provincienaam te tonen of te verbergen.</desc>
+        <image href="kaart.png" width="840" height="930" />
+        <g id="markers"></g>
+        <g id="labels"></g>
+      </svg>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
