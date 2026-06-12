@@ -23,6 +23,7 @@
             --color-leuk: #10b981;         /* Fris groen */
             --color-agenda: #4338ca;       /* Indigo */
             --color-faqta: #7c3aed;        /* Paars */
+            --color-topo: #0284c7;         /* Helderblauw voor Topografie */
         }
 
         * {
@@ -149,6 +150,7 @@
         .card-spelling::before { background-color: var(--color-leren); }
         .card-taal::before { background-color: var(--color-leuk); }
         .card-faqta::before { background-color: var(--color-faqta); }
+        .card-topo::before { background-color: var(--color-topo); }
         .card-plus::before { background-color: #94a3b8; }
 
         /* Icoontjes styling */
@@ -169,6 +171,7 @@
         .card-spelling .app-icon { color: var(--color-leren); }
         .card-taal .app-icon { color: var(--color-leuk); }
         .card-faqta .app-icon { color: var(--color-faqta); }
+        .card-topo .app-icon { color: var(--color-topo); }
         .card-plus .app-icon { color: #94a3b8; }
 
         /* App Titel styling */
@@ -212,7 +215,7 @@
             <p>Lef • Liefde • Leren • Leuk</p>
         </div>
         <div class="profile-area">
-            <img src="profiel.jpg" alt="Meester Tim" class="profile-avatar" onerror="this.style.display='none'; alert('Tip: Upload ook je foto als profiel.jpg naar GitHub om deze rechtsboven te zien!')">
+            <img src="profiel.jpg" alt="Meester Tim" class="profile-avatar" onerror="this.style.display='none';">
         </div>
     </nav>
 
@@ -247,6 +250,11 @@
             <a href="https://www.faqta.nl" target="_blank" class="app-card card-faqta">
                 <i class="fa-solid fa-compass app-icon"></i>
                 <span class="app-title">Faqta</span>
+            </a>
+
+            <a href="topografie.html" class="app-card card-topo">
+                <i class="fa-solid fa-earth-europe app-icon"></i>
+                <span class="app-title">Topografie</span>
             </a>
 
             <div class="app-card card-plus" onclick="alert('Hier kun je later via de code extra links toevoegen!')">
