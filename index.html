@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - De Eendragt</title>
+    <title>CBS De Eendragt - Startscherm</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght=600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-navy: #0f2c59;       /* De diepblauwe kleur van de schoolsite */
-            --text-dark: #334155;          /* Comfortabele donkere tekstkleur */
-            --bg-light: #f8fafc;           /* Zachtgrijze achtergrond voor de kaarten */
-            --border-color: #e2e8f0;       /* Lichte randjes voor structuur */
+            --primary-navy: #0f2c59;
+            --text-dark: #334155;
+            --border-color: #e2e8f0;
             
-            /* Accentuiterende kleuren geïnspireerd op de schoolthemas */
-            --color-lef: #f97316;          /* Oranje */
-            --color-liefde: #ef4444;       /* Warm rood */
-            --color-leren: #0ea5e9;        /* Helder blauw */
-            --color-leuk: #10b981;         /* Fris groen */
-            --color-agenda: #4338ca;       /* Indigo */
-            --color-faqta: #7c3aed;        /* Paars */
-            --color-topo: #0284c7;         /* Helderblauw voor Topografie */
+            /* Tegel kleuren */
+            --color-snappet: #f97316;
+            --color-agenda: #6366f1;
+            --color-kanjer: #ef4444;
+            --color-spelling: #06b6d4;
+            --color-taal: #10b981;
+            --color-faqta: #8b5cf6;
+            --color-topo: #0284c7;
+            --color-auto: #e11d48; /* Kleur voor Automatiseren */
         }
 
         * {
@@ -34,7 +34,7 @@
 
         body {
             font-family: 'Open Sans', sans-serif;
-            background-color: #f1f5f9; /* Subtiele lichtgrijze achtergrond voor de hele pagina */
+            background-color: #f1f5f9;
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
@@ -42,7 +42,7 @@
             align-items: center;
         }
 
-        /* De prachtige donkerblauwe topbalk (exact zoals het screenshot) */
+        /* Navigatiebalk bovenin */
         .top-navbar {
             background-color: var(--primary-navy);
             width: 100%;
@@ -53,63 +53,58 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .brand-container {
-            color: #ffffff;
+        .brand-container color: #ffffff; {
         }
-
+        
         .brand-container h1 {
             font-family: 'Nunito', sans-serif;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            color: #ffffff;
             margin-bottom: 0.2rem;
         }
 
         .brand-container p {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            color: #ffffff;
             opacity: 0.9;
-            letter-spacing: 0.5px;
+            font-weight: 400;
         }
 
-        /* Gepersonaliseerde profielfoto rechtsboven */
-        .profile-area {
+        .profile-container {
             display: flex;
             align-items: center;
+            gap: 1rem;
         }
 
-        .profile-avatar {
-            width: 70px;
-            height: 70px;
+        .profile-pic {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            border: 3px solid #ffffff;
+            border: 3px solid rgba(255,255,255,0.2);
             object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            background-color: #cbd5e1; /* Placeholder kleur mocht de foto laden */
         }
 
-        /* Content container voor de app-grid */
+        /* Dashboard Grid */
         .main-content {
             width: 100%;
-            max-width: 1200px;
-            padding: 3rem 2rem;
-            display: flex;
-            justify-content: center;
+            max-width: 1400px;
+            padding: 4rem 2rem;
         }
 
-        /* De Grid voor de apps */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2.5rem;
             width: 100%;
         }
 
-        /* De App Kaarten */
+        /* App Tegels Base */
         .app-card {
             background-color: #ffffff;
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            padding: 3rem 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -118,45 +113,54 @@
             transition: all 0.25s ease-in-out;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
 
-        /* Hover effecten */
         .app-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             border-color: #cbd5e1;
         }
 
-        /* Gekleurde indicatiestrip aan de bovenkant */
+        /* Gekleurde bovenrand per tegel */
         .app-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 8px;
-            transition: height 0.2s ease;
+            height: 10px;
         }
 
-        .app-card:hover::before {
-            height: 12px;
-        }
+        /* Specifieke tegel styling via classes */
+        .card-snappet::before { background-color: var(--color-snappet); }
+        .card-snappet .app-icon { color: var(--color-snappet); }
 
-        /* Specifieke stripkleuren per app */
-        .card-snappet::before { background-color: var(--color-lef); }
         .card-agenda::before { background-color: var(--color-agenda); }
-        .card-kanjer::before { background-color: var(--color-liefde); }
-        .card-spelling::before { background-color: var(--color-leren); }
-        .card-taal::before { background-color: var(--color-leuk); }
-        .card-faqta::before { background-color: var(--color-faqta); }
-        .card-topo::before { background-color: var(--color-topo); }
-        .card-plus::before { background-color: #94a3b8; }
+        .card-agenda .app-icon { color: var(--color-agenda); }
 
-        /* Icoontjes styling */
+        .card-kanjer::before { background-color: var(--color-kanjer); }
+        .card-kanjer .app-icon { color: var(--color-kanjer); }
+
+        .card-spelling::before { background-color: var(--color-spelling); }
+        .card-spelling .app-icon { color: var(--color-spelling); }
+
+        .card-taal::before { background-color: var(--color-taal); }
+        .card-taal .app-icon { color: var(--color-taal); }
+
+        .card-faqta::before { background-color: var(--color-faqta); }
+        .card-faqta .app-icon { color: var(--color-faqta); }
+
+        .card-topo::before { background-color: var(--color-topo); }
+        .card-topo .app-icon { color: var(--color-topo); }
+
+        .card-auto::before { background-color: var(--color-auto); }
+        .card-auto .app-icon { color: var(--color-auto); }
+
+        /* Elementen in de tegel */
         .app-icon {
-            font-size: 3.2rem;
-            margin-bottom: 1.2rem;
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
             transition: transform 0.2s ease;
         }
 
@@ -164,46 +168,42 @@
             transform: scale(1.08);
         }
 
-        /* Icoon kleuren */
-        .card-snappet .app-icon { color: var(--color-lef); }
-        .card-agenda .app-icon { color: var(--color-agenda); }
-        .card-kanjer .app-icon { color: var(--color-liefde); }
-        .card-spelling .app-icon { color: var(--color-leren); }
-        .card-taal .app-icon { color: var(--color-leuk); }
-        .card-faqta .app-icon { color: var(--color-faqta); }
-        .card-topo .app-icon { color: var(--color-topo); }
-        .card-plus .app-icon { color: #94a3b8; }
-
-        /* App Titel styling */
         .app-title {
             font-family: 'Nunito', sans-serif;
-            font-size: 1.35rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--primary-navy);
             text-align: center;
         }
 
-        /* "Later toevoegen" placeholder */
-        .app-card.card-plus {
+        /* Placeholder tegel (App Toevoegen) */
+        .placeholder {
             border: 2px dashed #cbd5e1;
-            background-color: transparent;
+            background-color: rgba(248, 250, 252, 0.6);
             box-shadow: none;
             cursor: pointer;
         }
-
-        .app-card.card-plus:hover {
+        .placeholder::before { display: none; }
+        .placeholder .app-icon { color: #94a3b8; }
+        .placeholder .app-title { color: #64748b; }
+        .placeholder:hover {
             background-color: #ffffff;
             border-style: solid;
+            border-color: #94a3b8;
         }
 
-        .card-plus .app-title {
-            color: #64748b;
-        }
-
-        /* Responsive design voor mobiel/tablet */
+        /* Responsive design voor tablets/telefoons */
         @media (max-width: 768px) {
-            .top-navbar { padding: 1.2rem 1.5rem; flex-direction: column; text-align: center; gap: 1rem; }
-            .dashboard-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+            .top-navbar {
+                padding: 1.5rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -214,51 +214,56 @@
             <h1>CBS De Eendragt</h1>
             <p>Lef • Liefde • Leren • Leuk</p>
         </div>
-        <div class="profile-area">
-            <img src="profiel.jpg" alt="Meester Tim" class="profile-avatar" onerror="this.style.display='none';">
+        <div class="profile-container">
+            <img src="profiel.jpg" alt="Leerkracht profiel" class="profile-pic">
         </div>
     </nav>
 
     <main class="main-content">
         <div class="dashboard-grid">
             
-            <a href="https://teacher.snappet.org" target="_blank" class="app-card card-snappet">
+            <a href="https://teacher.snappet.org/" target="_blank" class="app-card card-snappet">
                 <i class="fa-solid fa-graduation-cap app-icon"></i>
                 <span class="app-title">Snappet</span>
             </a>
 
-            <a href="https://calendar.google.com" target="_blank" class="app-card card-agenda">
-                <i class="fa-regular fa-calendar-days app-icon"></i>
+            <a href="https://calendar.google.com/" target="_blank" class="app-card card-agenda">
+                <i class="fa-solid fa-calendar-days app-icon"></i>
                 <span class="app-title">Google Agenda</span>
             </a>
 
-            <a href="https://www.kanjertraining.nl" target="_blank" class="app-card card-kanjer">
+            <a href="https://www.kanjertraining.nl/" target="_blank" class="app-card card-kanjer">
                 <i class="fa-solid fa-user-group app-icon"></i>
                 <span class="app-title">Kanjertraining</span>
             </a>
 
-            <a href="https://www.spellingoefenen.nl" target="_blank" class="app-card card-spelling">
-                <i class="fa-solid fa-spell-check app-icon"></i>
+            <a href="https://www.spellingoefenen.nl/" target="_blank" class="app-card card-spelling">
+                <i class="fa-solid fa-font-awesome app-icon"></i>
                 <span class="app-title">Spellingoefenen</span>
             </a>
 
-            <a href="https://www.taaloefenen.nl" target="_blank" class="app-card card-taal">
+            <a href="https://www.taaloefenen.nl/" target="_blank" class="app-card card-taal">
                 <i class="fa-solid fa-language app-icon"></i>
                 <span class="app-title">Taaloefenen</span>
             </a>
 
-            <a href="https://www.faqta.nl" target="_blank" class="app-card card-faqta">
+            <a href="https://dashboard.faqta.nl/" target="_blank" class="app-card card-faqta">
                 <i class="fa-solid fa-compass app-icon"></i>
                 <span class="app-title">Faqta</span>
             </a>
 
             <a href="topografie.html" class="app-card card-topo">
-                <i class="fa-solid fa-earth-europe app-icon"></i>
+                <i class="fa-solid fa-earth-americas app-icon"></i>
                 <span class="app-title">Topografie</span>
             </a>
 
-            <div class="app-card card-plus" onclick="alert('Hier kun je later via de code extra links toevoegen!')">
-                <i class="fa-solid fa-circle-plus app-icon"></i>
+            <a href="tafels/index.html" class="app-card card-auto">
+                <i class="fa-solid fa-calculator app-icon"></i>
+                <span class="app-title">Automatiseren</span>
+            </a>
+
+            <div class="app-card placeholder">
+                <i class="fa-solid fa-plus app-icon"></i>
                 <span class="app-title">App toevoegen</span>
             </div>
 
