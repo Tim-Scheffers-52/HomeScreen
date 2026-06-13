@@ -89,12 +89,13 @@
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            /* Zorgt dat alle kolommen exact even breed zijn */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
             width: 100%;
         }
 
-        /* App Tegels Base */
+        /* App Tegels Base - NU VOLLEDIG IDENTIEK VOOR IEDEREEN */
         .app-card {
             background-color: #ffffff;
             border: 1px solid var(--border-color);
@@ -103,13 +104,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* Zorgt voor gelijke verdeling */
+            justify-content: space-between;
             text-decoration: none;
             transition: all 0.25s ease-in-out;
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            height: 240px; /* Vaste hoogte voor perfecte symmetrie */
+            height: 240px; /* Forceert exact dezelfde hoogte voor elke tegel */
         }
 
         .app-card:hover {
@@ -137,27 +138,27 @@
         .card-topo::before { background-color: var(--color-topo); }
         .card-topo .app-icon { color: var(--color-topo); }
 
-        /* Container voor Logo's/Iconen om ze exact even groot te maken */
+        /* Container voor Logo's/Iconen om ze perfect uit te lijnen */
         .logo-container {
-            height: 80px;
+            height: 90px;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
 
-        /* Styling voor de geüploade logo's */
+        /* Universele maatvoering voor alle logo-afbeeldingen */
         .app-logo {
             max-height: 100%;
             max-width: 85%;
-            object-fit: contain; /* Behoudt de originele verhoudingen zonder vervorming */
+            object-fit: contain;
             transition: transform 0.2s ease;
         }
 
-        /* Styling voor de losse iconen (Topo & Auto) */
+        /* Universele maatvoering voor de losse iconen (Topo & Auto) */
         .app-icon {
-            font-size: 3.8rem;
+            font-size: 3.5rem;
             transition: transform 0.2s ease;
         }
 
@@ -172,10 +173,10 @@
             font-weight: 800;
             color: var(--primary-navy);
             text-align: center;
-            margin-top: auto; /* Duwt de tekst strak naar beneden */
+            margin-top: auto;
         }
 
-        /* Placeholder tegel (App Toevoegen) */
+        /* Placeholder tegel */
         .placeholder {
             border: 2px dashed #cbd5e1;
             background-color: rgba(248, 250, 252, 0.6);
@@ -185,7 +186,7 @@
         }
         .placeholder::before { display: none; }
         .placeholder .app-icon { color: #94a3b8; }
-        .placeholder .app-title { color: #64748b; margin-top: 1.5rem; }
+        .placeholder .app-title { color: #64748b; margin-top: 1rem; }
         .placeholder:hover {
             background-color: #ffffff;
             border-style: solid;
@@ -201,7 +202,7 @@
                 gap: 1.5rem;
             }
             .dashboard-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
                 gap: 1.5rem;
             }
         }
@@ -238,7 +239,7 @@
 
             <a href="https://www.spellingoefenen.nl/" target="_blank" class="app-card card-spelling">
                 <div class="logo-container">
-                    <img src="SO logo.jpeg" alt="Spellingoefenen logo" class="app-logo">
+                    <img src="SO.png" alt="Spellingoefenen logo" class="app-logo">
                 </div>
                 <span class="app-title">Spellingoefenen</span>
             </a>
