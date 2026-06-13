@@ -17,7 +17,7 @@
             
             /* Tegel kleuren */
             --color-snappet: #f97316;
-            --color-auto: #e11d48; /* Kleur voor Automatiseren */
+            --color-auto: #e11d48;
             --color-spelling: #06b6d4;
             --color-taal: #10b981;
             --color-faqta: #8b5cf6;
@@ -49,9 +49,6 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .brand-container {
         }
         
         .brand-container h1 {
@@ -102,16 +99,17 @@
             background-color: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: 20px;
-            padding: 3rem 2rem;
+            padding: 2.5rem 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between; /* Zorgt voor gelijke verdeling */
             text-decoration: none;
             transition: all 0.25s ease-in-out;
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            height: 240px; /* Vaste hoogte voor perfecte symmetrie */
         }
 
         .app-card:hover {
@@ -130,34 +128,42 @@
             height: 10px;
         }
 
-        /* Specifieke tegel styling via classes */
         .card-snappet::before { background-color: var(--color-snappet); }
-        .card-snappet .app-icon { color: var(--color-snappet); }
-
         .card-auto::before { background-color: var(--color-auto); }
         .card-auto .app-icon { color: var(--color-auto); }
-
         .card-spelling::before { background-color: var(--color-spelling); }
-        .card-spelling .app-icon { color: var(--color-spelling); }
-
         .card-taal::before { background-color: var(--color-taal); }
-        .card-taal .app-icon { color: var(--color-taal); }
-
         .card-faqta::before { background-color: var(--color-faqta); }
-        .card-faqta .app-icon { color: var(--color-faqta); }
-
         .card-topo::before { background-color: var(--color-topo); }
         .card-topo .app-icon { color: var(--color-topo); }
 
-        /* Elementen in de tegel */
-        .app-icon {
-            font-size: 3.8rem;
-            margin-bottom: 1.5rem;
+        /* Container voor Logo's/Iconen om ze exact even groot te maken */
+        .logo-container {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* Styling voor de geüploade logo's */
+        .app-logo {
+            max-height: 100%;
+            max-width: 85%;
+            object-fit: contain; /* Behoudt de originele verhoudingen zonder vervorming */
             transition: transform 0.2s ease;
         }
 
+        /* Styling voor de losse iconen (Topo & Auto) */
+        .app-icon {
+            font-size: 3.8rem;
+            transition: transform 0.2s ease;
+        }
+
+        .app-card:hover .app-logo,
         .app-card:hover .app-icon {
-            transform: scale(1.08);
+            transform: scale(1.06);
         }
 
         .app-title {
@@ -166,6 +172,7 @@
             font-weight: 800;
             color: var(--primary-navy);
             text-align: center;
+            margin-top: auto; /* Duwt de tekst strak naar beneden */
         }
 
         /* Placeholder tegel (App Toevoegen) */
@@ -174,17 +181,18 @@
             background-color: rgba(248, 250, 252, 0.6);
             box-shadow: none;
             cursor: pointer;
+            justify-content: center;
         }
         .placeholder::before { display: none; }
         .placeholder .app-icon { color: #94a3b8; }
-        .placeholder .app-title { color: #64748b; }
+        .placeholder .app-title { color: #64748b; margin-top: 1.5rem; }
         .placeholder:hover {
             background-color: #ffffff;
             border-style: solid;
             border-color: #94a3b8;
         }
 
-        /* Responsive design voor tablets/telefoons */
+        /* Responsive design */
         @media (max-width: 768px) {
             .top-navbar {
                 padding: 1.5rem;
@@ -215,32 +223,44 @@
         <div class="dashboard-grid">
             
             <a href="https://teacher.snappet.org/" target="_blank" class="app-card card-snappet">
-                <i class="fa-solid fa-graduation-cap app-icon"></i>
+                <div class="logo-container">
+                    <img src="SNAPPET.jpeg" alt="Snappet logo" class="app-logo">
+                </div>
                 <span class="app-title">Snappet</span>
             </a>
 
             <a href="tafels/index.html" class="app-card card-auto">
-                <i class="fa-solid fa-calculator app-icon"></i>
+                <div class="logo-container">
+                    <i class="fa-solid fa-calculator app-icon"></i>
+                </div>
                 <span class="app-title">Automatiseren</span>
             </a>
 
             <a href="https://www.spellingoefenen.nl/" target="_blank" class="app-card card-spelling">
-                <i class="fa-solid fa-font-awesome app-icon"></i>
+                <div class="logo-container">
+                    <img src="SO logo.jpeg" alt="Spellingoefenen logo" class="app-logo">
+                </div>
                 <span class="app-title">Spellingoefenen</span>
             </a>
 
             <a href="https://www.taaloefenen.nl/" target="_blank" class="app-card card-taal">
-                <i class="fa-solid fa-language app-icon"></i>
+                <div class="logo-container">
+                    <img src="TO logo.png" alt="Taaloefenen logo" class="app-logo">
+                </div>
                 <span class="app-title">Taaloefenen</span>
             </a>
 
             <a href="https://dashboard.faqta.nl/" target="_blank" class="app-card card-faqta">
-                <i class="fa-solid fa-compass app-icon"></i>
+                <div class="logo-container">
+                    <img src="Faqta logo.png" alt="Faqta logo" class="app-logo">
+                </div>
                 <span class="app-title">Faqta</span>
             </a>
 
             <a href="topografie.html" class="app-card card-topo">
-                <i class="fa-solid fa-earth-americas app-icon"></i>
+                <div class="logo-container">
+                    <i class="fa-solid fa-earth-americas app-icon"></i>
+                </div>
                 <span class="app-title">Topografie</span>
             </a>
 
