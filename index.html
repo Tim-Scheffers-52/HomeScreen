@@ -15,8 +15,9 @@
             --text-dark: #334155;
             --border-color: #e2e8f0;
             
-            /* Gecorrigeerde kleuren exact passend bij de logo's */
+            /* Kleuren passend bij de logo's + nieuwe kleur Geel */
             --color-snappet: #f97316;
+            --color-rekenen: #eab308; /* Warme kleur geel */
             --color-auto: #e11d48;
             --color-spelling: #000000;
             --color-taal: #9333ea;
@@ -97,7 +98,7 @@
         /* App Tegels Base met dunne rand */
         .app-card {
             background-color: #ffffff;
-            border: 2px solid var(--border-color); /* Dunne rand als basis */
+            border: 2px solid var(--border-color);
             border-radius: 20px;
             padding: 2.5rem 1.5rem;
             display: flex;
@@ -110,6 +111,7 @@
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             height: 240px;
+            cursor: pointer;
         }
 
         .app-card:hover {
@@ -119,6 +121,9 @@
 
         /* Dunne gekleurde rand rondom de specifieke tegels */
         .card-snappet { border-color: var(--color-snappet); }
+        
+        .card-rekenen { border-color: var(--color-rekenen); }
+        .card-rekenen .app-icon { color: var(--color-rekenen); }
         
         .card-auto { border-color: var(--color-auto); }
         .card-auto .app-icon { color: var(--color-auto); }
@@ -168,20 +173,107 @@
             margin-top: auto;
         }
 
-        /* Placeholder tegel */
-        .placeholder {
-            border: 2px dashed #cbd5e1;
-            background-color: rgba(248, 250, 252, 0.6);
-            box-shadow: none;
-            cursor: pointer;
+        /* --- POP-UP MODAL SYSTEEM --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 44, 89, 0.5); /* Navy gloed over de achtergrond */
+            backdrop-filter: blur(4px);
+            display: flex;
             justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
-        .placeholder .app-icon { color: #94a3b8; }
-        .placeholder .app-title { color: #64748b; margin-top: 1rem; }
-        .placeholder:hover {
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
             background-color: #ffffff;
-            border-style: solid;
-            border-color: #94a3b8;
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 3px solid var(--color-rekenen);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .close-modal-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--color-auto);
+        }
+
+        /* Lijst met applicaties in de pop-up */
+        .modal-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 1.5rem;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+        }
+
+        .modal-link-item:hover {
+            background-color: #fef08a; /* Lichtgeel bij hover */
+            border-color: var(--color-rekenen);
+            transform: translateX(4px);
+            color: var(--primary-navy);
+        }
+
+        .modal-link-item i {
+            color: var(--color-rekenen);
         }
 
         /* Mobielvriendelijk */
@@ -219,6 +311,13 @@
                 <span class="app-title">Snappet</span>
             </a>
 
+            <div class="app-card card-rekenen" onclick="openModal()">
+                <div class="logo-container">
+                    <i class="fa-solid fa-arrow-up-right-dots app-icon"></i>
+                </div>
+                <span class="app-title">Rekenen</span>
+            </div>
+
             <a href="tafels/index.html" class="app-card card-auto">
                 <div class="logo-container">
                     <i class="fa-solid fa-calculator app-icon"></i>
@@ -254,13 +353,53 @@
                 <span class="app-title">Topografie</span>
             </a>
 
-            <div class="app-card placeholder">
-                <i class="fa-solid fa-plus app-icon"></i>
-                <span class="app-title">App toevoegen</span>
-            </div>
-
         </div>
     </main>
+
+    <div class="modal-overlay" id="rekenModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fa-solid fa-calculator"></i> Kies een rekenapp
+                </h2>
+                <button class="close-modal-btn" onclick="closeModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="modal-links-list">
+                <a href="tafels/index.html" class="modal-link-item">
+                    <span><i class="fa-solid fa-star mr-2"></i> Automatiseren (Tafels)</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="https://www.rekenen-oefenen.nl/" target="_blank" class="modal-link-item">
+                    <span><i class="fa-solid fa-graduation-cap mr-2"></i> Rekenen-oefenen.nl</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+                <a href="https://teacher.snappet.org/" target="_blank" class="modal-link-item">
+                    <span><i class="fa-solid fa-circle-play mr-2"></i> Snappet Rekenen</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('rekenModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('rekenModal').classList.remove('active');
+        }
+
+        // Sluit de pop-up ook als je buiten het witte vak klikt
+        function closeModalOnOverlay(event) {
+            if (event.target === document.getElementById('rekenModal')) {
+                closeModal();
+            }
+        }
+    </script>
 
 </body>
 </html>
