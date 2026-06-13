@@ -15,13 +15,13 @@
             --text-dark: #334155;
             --border-color: #e2e8f0;
             
-            /* Tegel kleuren */
+            /* Gecorrigeerde kleuren exact passend bij de logo's */
             --color-snappet: #f97316;
             --color-auto: #e11d48;
-            --color-spelling: #06b6d4;
-            --color-taal: #10b981;
-            --color-faqta: #8b5cf6;
-            --color-topo: #0284c7;
+            --color-spelling: #000000;
+            --color-taal: #9333ea;
+            --color-faqta: #1e3a8a;
+            --color-topo: #2563eb;
         }
 
         * {
@@ -89,13 +89,12 @@
 
         .dashboard-grid {
             display: grid;
-            /* Forceert 4 gelijke kolommen naast elkaar op het scherm */
             grid-template-columns: repeat(4, 1fr);
             gap: 2.5rem;
             width: 100%;
         }
 
-        /* App Tegels Base - Volledig identiek */
+        /* App Tegels Base */
         .app-card {
             background-color: #ffffff;
             border: 1px solid var(--border-color);
@@ -110,7 +109,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            height: 240px; /* Exact dezelfde hoogte */
+            height: 240px;
         }
 
         .app-card:hover {
@@ -130,11 +129,16 @@
         }
 
         .card-snappet::before { background-color: var(--color-snappet); }
+        
         .card-auto::before { background-color: var(--color-auto); }
         .card-auto .app-icon { color: var(--color-auto); }
+        
         .card-spelling::before { background-color: var(--color-spelling); }
+        
         .card-taal::before { background-color: var(--color-taal); }
+        
         .card-faqta::before { background-color: var(--color-faqta); }
+        
         .card-topo::before { background-color: var(--color-topo); }
         .card-topo .app-icon { color: var(--color-topo); }
 
@@ -148,7 +152,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Universele maatvoering voor alle logo-afbeeldingen */
         .app-logo {
             max-height: 100%;
             max-width: 90%;
@@ -156,7 +159,6 @@
             transition: transform 0.2s ease;
         }
 
-        /* Universele maatvoering voor de losse iconen */
         .app-icon {
             font-size: 3.5rem;
             transition: transform 0.2s ease;
@@ -193,7 +195,7 @@
             border-color: #94a3b8;
         }
 
-        /* Mobielvriendelijk schakelen naar minder kolommen bij kleine schermen */
+        /* Mobielvriendelijk */
         @media (max-width: 1024px) {
             .dashboard-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         }
