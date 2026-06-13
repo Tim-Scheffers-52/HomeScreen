@@ -17,11 +17,11 @@
             
             /* Tegel kleuren */
             --color-snappet: #f97316;
+            --color-auto: #e11d48; /* Kleur voor Automatiseren */
             --color-spelling: #06b6d4;
             --color-taal: #10b981;
             --color-faqta: #8b5cf6;
             --color-topo: #0284c7;
-            --color-auto: #e11d48; /* Kleur voor Automatiseren */
         }
 
         * {
@@ -134,6 +134,9 @@
         .card-snappet::before { background-color: var(--color-snappet); }
         .card-snappet .app-icon { color: var(--color-snappet); }
 
+        .card-auto::before { background-color: var(--color-auto); }
+        .card-auto .app-icon { color: var(--color-auto); }
+
         .card-spelling::before { background-color: var(--color-spelling); }
         .card-spelling .app-icon { color: var(--color-spelling); }
 
@@ -145,9 +148,6 @@
 
         .card-topo::before { background-color: var(--color-topo); }
         .card-topo .app-icon { color: var(--color-topo); }
-
-        .card-auto::before { background-color: var(--color-auto); }
-        .card-auto .app-icon { color: var(--color-auto); }
 
         /* Elementen in de tegel */
         .app-icon {
@@ -219,6 +219,11 @@
                 <span class="app-title">Snappet</span>
             </a>
 
+            <a href="tafels/index.html" class="app-card card-auto">
+                <i class="fa-solid fa-calculator app-icon"></i>
+                <span class="app-title">Automatiseren</span>
+            </a>
+
             <a href="https://www.spellingoefenen.nl/" target="_blank" class="app-card card-spelling">
                 <i class="fa-solid fa-font-awesome app-icon"></i>
                 <span class="app-title">Spellingoefenen</span>
@@ -237,11 +242,6 @@
             <a href="topografie.html" class="app-card card-topo">
                 <i class="fa-solid fa-earth-americas app-icon"></i>
                 <span class="app-title">Topografie</span>
-            </a>
-
-            <a href="tafels/index.html" class="app-card card-auto">
-                <i class="fa-solid fa-calculator app-icon"></i>
-                <span class="app-title">Automatiseren</span>
             </a>
 
             <div class="app-card placeholder">
