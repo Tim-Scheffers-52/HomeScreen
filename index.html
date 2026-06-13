@@ -111,7 +111,6 @@
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             height: 240px;
-            cursor: pointer;
         }
 
         .app-card:hover {
@@ -173,107 +172,16 @@
             margin-top: auto;
         }
 
-        /* --- POP-UP MODAL SYSTEEM --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(15, 44, 89, 0.5);
-            backdrop-filter: blur(4px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+        /* Mobielvriendelijk */
+        @media (max-width: 1024px) {
+            .dashboard-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        @media (max-width: 768px) {
+            .top-navbar { padding: 1.5rem; flex-direction: column; text-align: center; gap: 1.5rem; }
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
-        .modal-box {
-            background-color: #ffffff;
-            padding: 2.5rem;
-            border-radius: 24px;
-            width: 90%;
-            max-width: 550px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 3px solid var(--color-rekenen);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-
-        .modal-overlay.active .modal-box {
-            transform: scale(1);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .modal-title {
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary-navy);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .close-modal-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #94a3b8;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .close-modal-btn:hover {
-            color: var(--color-auto);
-        }
-
-        /* Lijst met applicaties in de pop-up */
-        .modal-links-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .modal-link-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.2rem 1.5rem;
-            background-color: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.2s ease;
-        }
-
-        .modal-link-item:hover {
-            background-color: #fef08a;
-            border-color: var(--color-rekenen);
-            transform: translateX(4px);
-            color: var(--primary-navy);
-        }
-
-        .modal-link-item i {
-            color: var(--color-rekenen);
+        @media (max-width: 480px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -299,12 +207,12 @@
                 <span class="app-title">Snappet</span>
             </a>
 
-            <div class="app-card card-rekenen" onclick="openModal()">
+            <a href="Scoren!.html" target="_blank" class="app-card card-rekenen">
                 <div class="logo-container">
-                    <i class="fa-solid fa-arrow-up-right-dots app-icon"></i>
+                    <i class="fa-solid fa-trophy app-icon"></i>
                 </div>
                 <span class="app-title">Rekenen</span>
-            </div>
+            </a>
 
             <a href="tafels/index.html" class="app-card card-auto">
                 <div class="logo-container">
@@ -343,42 +251,6 @@
 
         </div>
     </main>
-
-    <div class="modal-overlay" id="rekenModal" onclick="closeModalOnOverlay(event)">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <i class="fa-solid fa-calculator"></i> Kies een rekenapp
-                </h2>
-                <button class="close-modal-btn" onclick="closeModal()">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            
-            <div class="modal-links-list">
-                <a href="Scoren!.html" class="modal-link-item">
-                    <span><i class="fa-solid fa-trophy mr-2"></i> Scoren!</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openModal() {
-            document.getElementById('rekenModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('rekenModal').classList.remove('active');
-        }
-
-        function closeModalOnOverlay(event) {
-            if (event.target === document.getElementById('rekenModal')) {
-                closeModal();
-            }
-        }
-    </script>
 
 </body>
 </html>
