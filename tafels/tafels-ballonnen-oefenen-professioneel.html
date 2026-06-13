@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tafels oefenen met ballonnen</title>
+  <style>
+    :root{
+      --ink:#102033; --muted:#5b6b7d; --blue:#2563eb; --cyan:#06b6d4; --green:#16a34a; --red:#ef4444; --yellow:#fbbf24;
+      --card:rgba(255,255,255,.92); --stroke:rgba(255,255,255,.7);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:var(--ink);
+      min-height:100vh; overflow:hidden;
+      background:
+        radial-gradient(circle at 10% 12%, rgba(255,255,255,.9) 0 8%, transparent 9%),
+        radial-gradient(circle at 88% 20%, rgba(255,255,255,.75) 0 7%, transparent 8%),
+        linear-gradient(135deg,#e0f7ff 0%,#b9e9ff 38%,#eaf7ff 100%);
+    }
+    .app{height:100vh; max-width:1180px; margin:0 auto; padding:14px; display:flex; flex-direction:column; gap:10px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 12px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:58px;height:58px;border-radius:20px;position:relative;display:grid;place-items:center;background:linear-gradient(145deg,#2563eb,#06b6d4);box-shadow:0 14px 30px rgba(37,99,235,.28), inset 0 -8px 0 rgba(0,0,0,.10);overflow:hidden}.logo:before{content:"";position:absolute;width:82px;height:82px;border-radius:50%;background:rgba(255,255,255,.18);left:-38px;top:-32px}.logo-main{font-size:34px;font-weight:1000;color:white;text-shadow:0 2px 0 rgba(0,0,0,.15);z-index:2}.logo-b1,.logo-b2,.logo-b3{position:absolute;display:grid;place-items:center;width:20px;height:20px;border-radius:999px;background:#fff;color:#2563eb;font-size:10px;font-weight:1000;box-shadow:0 5px 12px rgba(0,0,0,.14)}.logo-b1{right:7px;top:6px}.logo-b2{left:6px;bottom:8px}.logo-b3{right:8px;bottom:7px}
+    h1{margin:0;font-size:clamp(24px,3vw,38px);letter-spacing:-.05em;line-height:1}.subtitle{margin:3px 0 0;color:var(--muted);font-weight:700;font-size:14px}
+    .panel{background:var(--card);border:1px solid var(--stroke);box-shadow:0 18px 50px rgba(37,99,235,.16);border-radius:28px;padding:16px;backdrop-filter:blur(12px)}
+    .hidden{display:none!important}
+    #home{flex:1;display:flex;flex-direction:column;justify-content:center}.home-title{text-align:center;margin:0 0 14px;font-size:26px;letter-spacing:-.03em}
+    .table-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:920px;margin:0 auto;width:100%}
+    .table-btn{border:0;border-radius:26px;padding:14px 8px;min-height:110px;cursor:pointer;color:#fff;font-weight:1000;font-size:40px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.13),0 12px 18px rgba(0,0,0,.12);transition:.15s transform,.15s filter;position:relative;overflow:hidden}
+    .table-btn:before{content:"";position:absolute;inset:10px auto auto 14px;width:28px;height:18px;border-radius:50%;background:rgba(255,255,255,.35);transform:rotate(-25deg)}
+    .table-btn:hover{transform:translateY(-4px) scale(1.02);filter:saturate(1.15)}.table-btn span{display:block;font-size:13px;margin-top:2px;letter-spacing:.01em}
+    #practice{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+    .topbar{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}.stats{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.pill{background:#fff;border:1px solid #dbeafe;border-radius:999px;padding:8px 12px;font-weight:900;box-shadow:0 8px 18px rgba(37,99,235,.08);font-size:14px;white-space:nowrap}.table-pill{font-size:18px;background:linear-gradient(145deg,#1d4ed8,#06b6d4);color:#fff;border:0}
+    .controls{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}button.small,select{border:0;border-radius:999px;padding:9px 12px;font-weight:950;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 8px 18px rgba(0,0,0,.08);font-size:13px}button.primary{background:#2563eb;color:#fff}.danger{background:#ef4444!important;color:#fff!important}.success{background:#16a34a!important;color:#fff!important}
+    .game-wrap{position:relative;flex:1;min-height:0;display:grid;grid-template-columns:minmax(230px,1fr) 66px minmax(230px,1fr);gap:10px;align-items:stretch}.col-card{background:rgba(255,255,255,.56);border:1px solid rgba(255,255,255,.8);border-radius:24px;padding:10px;min-height:0;display:flex;flex-direction:column}.col-card h2{margin:0 0 7px;text-align:center;font-size:18px;letter-spacing:-.02em}.col{display:grid;grid-template-rows:repeat(10,1fr);gap:7px;min-height:0;flex:1}
+    .connector-area{position:absolute;inset:40px 0 0 0;pointer-events:none;z-index:2}svg{width:100%;height:100%;overflow:visible}.line{stroke:#2563eb;stroke-width:5;stroke-linecap:round;filter:drop-shadow(0 2px 2px rgba(0,0,0,.16))}.line.correct{stroke:#16a34a}.line.wrong{stroke:#ef4444}
+    .middle{display:grid;place-items:center;font-size:38px;font-weight:1000;color:#2563eb33}.middle-badge{width:56px;height:56px;border-radius:20px;background:#fff;display:grid;place-items:center;box-shadow:0 12px 24px rgba(37,99,235,.12)}
+    .balloon{height:100%;min-height:40px;border:0;border-radius:999px;padding:6px 12px;color:#fff;font-weight:1000;font-size:clamp(18px,2.15vw,27px);cursor:pointer;box-shadow:inset 0 -7px 0 rgba(0,0,0,.13),0 6px 12px rgba(0,0,0,.12);position:relative;transition:.12s transform,.12s opacity,.12s box-shadow;display:flex;align-items:center;justify-content:center;text-align:center;user-select:none}.balloon:before{content:"";position:absolute;left:16px;top:8px;width:21px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);transform:rotate(-20deg)}.balloon:hover{transform:translateY(-2px) scale(1.01)}.balloon.selected{outline:4px solid #fff;box-shadow:0 0 0 5px var(--yellow),inset 0 -7px 0 rgba(0,0,0,.13),0 10px 18px rgba(0,0,0,.17)}.balloon.done{opacity:.30;pointer-events:none;transform:scale(.98)}
+    .feedback{text-align:center;font-size:18px;font-weight:1000;min-height:24px}.ok{color:#15803d}.bad{color:#dc2626}
+    .modal{position:fixed;inset:0;background:rgba(16,32,51,.42);display:grid;place-items:center;padding:20px;z-index:5}.modal-card{background:linear-gradient(180deg,#ffffff 0%,#eef8ff 100%);border:1px solid rgba(255,255,255,.9);border-radius:34px;padding:28px;max-width:520px;width:100%;text-align:center;box-shadow:0 25px 90px rgba(0,0,0,.30);position:relative;overflow:hidden}.modal-card:before{content:"";position:absolute;inset:-80px -30px auto auto;width:220px;height:220px;border-radius:50%;background:rgba(251,191,36,.22)}.modal-card.record-breaker{background:radial-gradient(circle at 50% 0%,#fff7d6 0%,#fff 45%,#eaf7ff 100%)}.trophy{font-size:58px;margin-bottom:4px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.15))}.modal-card h2{font-size:34px;margin:0 0 8px;letter-spacing:-.03em}.modal-card p{font-size:18px}.bigscore{font-size:58px;font-weight:1000;color:#2563eb;line-height:1}.record{font-weight:1000;color:#0f766e;min-height:28px}
+    @media(max-height:760px){.app{padding:8px;gap:6px}header{padding:4px 8px}.logo{width:46px;height:46px}.logo-main{font-size:28px}.logo-b1,.logo-b2,.logo-b3{width:16px;height:16px;font-size:8px}h1{font-size:28px}.subtitle{font-size:12px}.panel{padding:10px;border-radius:22px}.balloon{min-height:34px;font-size:20px}.col{gap:5px}.col-card h2{font-size:16px;margin-bottom:5px}.feedback{font-size:16px}.table-btn{min-height:86px;font-size:32px}.home-title{font-size:22px}.table-grid{gap:9px}}
+    @media(max-width:850px){body{overflow:auto}.app{height:auto;min-height:100vh}.table-grid{grid-template-columns:repeat(2,1fr)}.topbar{grid-template-columns:1fr}.controls,.stats{justify-content:center}.game-wrap{grid-template-columns:1fr 42px 1fr}.middle-badge{width:40px;height:40px;border-radius:14px}.middle{font-size:26px}.balloon{font-size:18px;padding:5px}.connector-area{inset:36px 0 0 0}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div class="brand"><div class="logo"><span class="logo-main">×</span><span class="logo-b1">4</span><span class="logo-b2">8</span><span class="logo-b3">12</span></div><div><h1>Tafels</h1><p class="subtitle">Kies een tafel en verbind elke som met het juiste antwoord.</p></div></div>
+    </header>
+
+    <section id="home" class="panel">
+      <h2 class="home-title">Welke tafel wil je oefenen?</h2>
+      <div class="table-grid" id="tableGrid"></div>
+    </section>
+
+    <section id="practice" class="panel hidden">
+      <div class="topbar">
+        <div class="pill table-pill" id="tableTitle">Tafel van 4</div>
+        <div class="stats">
+          <div class="pill">Goed: <span id="score">0</span></div>
+          <div class="pill">Fout: <span id="mistakes">0</span></div>
+          <div class="pill">Tijd: <span id="time">∞</span></div>
+        </div>
+        <div class="controls">
+          <select id="timerSelect" title="Timer">
+            <option value="0">Geen timer</option><option value="30">30 sec.</option><option value="60">1 minuut</option><option value="120">2 minuten</option>
+          </select>
+          <button class="small primary" id="startTimer">Start</button>
+          <button class="small" id="newRound">Nieuwe ronde</button>
+          <button class="small danger" id="backHome">Terug</button>
+        </div>
+      </div>
+      <div class="game-wrap" id="game">
+        <svg class="connector-area" id="svg"></svg>
+        <div class="col-card"><h2>Sommen</h2><div id="questions" class="col"></div></div>
+        <div class="middle"><div class="middle-badge">⇄</div></div>
+        <div class="col-card"><h2>Antwoorden</h2><div id="answers" class="col"></div></div>
+      </div>
+      <div id="feedback" class="feedback"></div>
+    </section>
+  </main>
+
+  <div id="endModal" class="modal hidden">
+    <div class="modal-card" id="modalCard">
+      <div class="trophy" id="trophy">🏆</div>
+      <h2 id="modalTitle">Knap gedaan!</h2>
+      <p id="modalText">Je score:</p>
+      <div class="bigscore" id="finalScore">0</div>
+      <p class="record" id="recordText"></p>
+      <button class="small success" id="again">Nog een keer</button>
+      <button class="small primary" id="chooseTable">Andere tafel</button>
+    </div>
+  </div>
+
+<script>
+const colors = ['#2563eb','#16a34a','#f97316','#9333ea','#db2777','#0891b2','#ea580c','#7c3aed','#0f766e','#dc2626'];
+const grid = document.getElementById('tableGrid'), home = document.getElementById('home'), practice = document.getElementById('practice');
+const questionsEl = document.getElementById('questions'), answersEl = document.getElementById('answers'), tableTitle = document.getElementById('tableTitle');
+const scoreEl = document.getElementById('score'), mistakesEl = document.getElementById('mistakes'), timeEl = document.getElementById('time'), feedback = document.getElementById('feedback'), svg = document.getElementById('svg');
+const timerSelect = document.getElementById('timerSelect'), modal = document.getElementById('endModal'), finalScore = document.getElementById('finalScore'), modalCard = document.getElementById('modalCard'), modalTitle = document.getElementById('modalTitle'), modalText = document.getElementById('modalText'), recordText = document.getElementById('recordText'), trophy = document.getElementById('trophy');
+let currentTable = 1, selectedQ = null, score = 0, mistakes = 0, timer = null, timeLeft = 0, timerDuration = 0, gameLocked = false;
+for(let i=1;i<=10;i++){ const btn=document.createElement('button'); btn.className='table-btn'; btn.style.background=`linear-gradient(145deg, ${colors[i-1]}, ${shade(colors[i-1],-24)})`; btn.innerHTML=`${i}<span>tafel van ${i}</span>`; btn.onclick=()=>openTable(i); grid.appendChild(btn); }
+function shade(hex, amt){let c=hex.replace('#',''),n=parseInt(c,16),r=(n>>16)+amt,g=(n>>8&255)+amt,b=(n&255)+amt;return '#'+(0x1000000+(Math.max(0,Math.min(255,r))<<16)+(Math.max(0,Math.min(255,g))<<8)+Math.max(0,Math.min(255,b))).toString(16).slice(1)}
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+function openTable(n){currentTable=n;home.classList.add('hidden');practice.classList.remove('hidden');tableTitle.textContent=`Tafel van ${n}`;timerSelect.value='0';resetTimer();newRound();}
+function newRound(){gameLocked=false;selectedQ=null;score=0;mistakes=0;scoreEl.textContent=0;mistakesEl.textContent=0;feedback.textContent='';feedback.className='feedback';svg.innerHTML='';questionsEl.innerHTML='';answersEl.innerHTML='';const qs=shuffle([...Array(10)].map((_,i)=>i+1));const ans=shuffle(qs.map(x=>x*currentTable));qs.forEach((q,i)=>questionsEl.appendChild(makeBalloon(`${q} × ${currentTable}`,'q',q,colors[i%colors.length])));ans.forEach((a,i)=>answersEl.appendChild(makeBalloon(a,'a',a/currentTable,colors[(i+3)%colors.length])));}
+function makeBalloon(text,type,value,color){const b=document.createElement('button');b.className='balloon';b.textContent=text;b.style.background=`linear-gradient(145deg, ${color}, ${shade(color,-26)})`;b.dataset.type=type;b.dataset.value=value;b.onclick=()=>handleBalloon(b);return b;}
+function handleBalloon(b){if(gameLocked||b.classList.contains('done'))return;if(b.dataset.type==='q'){document.querySelectorAll('.balloon.selected').forEach(x=>x.classList.remove('selected'));selectedQ=b;b.classList.add('selected');feedback.textContent='Kies rechts het goede antwoord.';feedback.className='feedback';return;}if(!selectedQ){feedback.textContent='Klik eerst links op een som.';feedback.className='feedback bad';return;}const correct=selectedQ.dataset.value===b.dataset.value;drawLine(selectedQ,b,correct);if(correct){selectedQ.classList.add('done');b.classList.add('done');selectedQ.classList.remove('selected');score++;scoreEl.textContent=score;feedback.textContent='Goed! 🎉';feedback.className='feedback ok';selectedQ=null;if(score===10){feedback.textContent='Alles goed! 🏆';finishCompletedRound();}}else{mistakes++;mistakesEl.textContent=mistakes;feedback.textContent='Bijna! Probeer nog eens.';feedback.className='feedback bad';selectedQ.classList.remove('selected');selectedQ=null;setTimeout(()=>{const last=svg.lastElementChild;if(last&&last.classList.contains('wrong'))last.remove();},500);}}
+function drawLine(left,right,correct){const game=document.getElementById('game').getBoundingClientRect(),a=left.getBoundingClientRect(),b=right.getBoundingClientRect();const x1=a.right-game.left,y1=a.top+a.height/2-game.top,x2=b.left-game.left,y2=b.top+b.height/2-game.top;const line=document.createElementNS('http://www.w3.org/2000/svg','line');line.setAttribute('x1',x1);line.setAttribute('y1',y1);line.setAttribute('x2',x2);line.setAttribute('y2',y2);line.setAttribute('class',`line ${correct?'correct':'wrong'}`);svg.appendChild(line);}
+function resetTimer(){stopTimer();timerDuration=0;timeLeft=0;timeEl.textContent='∞';} function stopTimer(){if(timer){clearInterval(timer);timer=null;}}
+document.getElementById('startTimer').onclick=()=>{const secs=Number(timerSelect.value);if(!secs){resetTimer();return;}stopTimer();timerDuration=secs;timeLeft=secs;timeEl.textContent=timeLeft;gameLocked=false;timer=setInterval(()=>{timeLeft--;timeEl.textContent=timeLeft;if(timeLeft<=0){stopTimer();gameLocked=true;showEndModal({completed:false});}},1000);};
+function formatTime(seconds){const m=Math.floor(seconds/60),s=seconds%60;return m?`${m}:${String(s).padStart(2,'0')}`:`${s} sec.`;}
+function finishCompletedRound(){gameLocked=true;if(timer){stopTimer();showEndModal({completed:true});} }
+function showEndModal({completed}){modalCard.classList.remove('record-breaker');const playedWithTimer=timerDuration>0;const elapsed=playedWithTimer?Math.max(0,timerDuration-timeLeft):0;const key=`tafels-highscore-tafel-${currentTable}-timer-${timerDuration}`;let oldBest=Number(localStorage.getItem(key)||0);let isRecord=false;if(completed&&playedWithTimer){isRecord=!oldBest||elapsed<oldBest;if(isRecord){localStorage.setItem(key,String(elapsed));oldBest=elapsed;}}
+if(completed&&playedWithTimer){modalTitle.textContent=isRecord?'Nieuw snelheidsrecord!':'Tafel compleet!';modalText.textContent='Je koppelde alles goed in:';finalScore.textContent=formatTime(elapsed);recordText.textContent=isRecord?'Jij bent de snelste! 🚀':`Snelste tijd: ${formatTime(oldBest)}`;trophy.textContent=isRecord?'🏆':'🎉';if(isRecord)modalCard.classList.add('record-breaker');}
+else if(completed){modalTitle.textContent='Alles goed!';modalText.textContent='Je hebt alle 10 koppelingen gemaakt.';finalScore.textContent='10/10';recordText.textContent='Zet de timer aan voor een snelheidsrecord.';trophy.textContent='🎉';}
+else{modalTitle.textContent='Tijd voorbij!';modalText.textContent='Je had zoveel koppelingen goed:';finalScore.textContent=`${score}/10`;recordText.textContent='Probeer je score te verbeteren!';trophy.textContent='⏰';}
+modal.classList.remove('hidden');}
+
+document.getElementById('newRound').onclick=()=>{resetTimer();newRound();}; document.getElementById('backHome').onclick=()=>{resetTimer();practice.classList.add('hidden');home.classList.remove('hidden');};
+document.getElementById('again').onclick=()=>{modal.classList.add('hidden');newRound();document.getElementById('startTimer').click();}; document.getElementById('chooseTable').onclick=()=>{modal.classList.add('hidden');resetTimer();practice.classList.add('hidden');home.classList.remove('hidden');};
+window.addEventListener('resize',()=>{svg.innerHTML='';});
+</script>
+</body>
+</html>
