@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght=600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght=600;800&family=Open+Sans:wght=400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -89,13 +89,13 @@
 
         .dashboard-grid {
             display: grid;
-            /* Zorgt dat alle kolommen exact even breed zijn */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            /* Forceert 4 gelijke kolommen naast elkaar op het scherm */
+            grid-template-columns: repeat(4, 1fr);
             gap: 2.5rem;
             width: 100%;
         }
 
-        /* App Tegels Base - NU VOLLEDIG IDENTIEK VOOR IEDEREEN */
+        /* App Tegels Base - Volledig identiek */
         .app-card {
             background-color: #ffffff;
             border: 1px solid var(--border-color);
@@ -110,7 +110,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            height: 240px; /* Forceert exact dezelfde hoogte voor elke tegel */
+            height: 240px; /* Exact dezelfde hoogte */
         }
 
         .app-card:hover {
@@ -138,7 +138,7 @@
         .card-topo::before { background-color: var(--color-topo); }
         .card-topo .app-icon { color: var(--color-topo); }
 
-        /* Container voor Logo's/Iconen om ze perfect uit te lijnen */
+        /* Container voor Logo's/Iconen */
         .logo-container {
             height: 90px;
             display: flex;
@@ -151,12 +151,12 @@
         /* Universele maatvoering voor alle logo-afbeeldingen */
         .app-logo {
             max-height: 100%;
-            max-width: 85%;
+            max-width: 90%;
             object-fit: contain;
             transition: transform 0.2s ease;
         }
 
-        /* Universele maatvoering voor de losse iconen (Topo & Auto) */
+        /* Universele maatvoering voor de losse iconen */
         .app-icon {
             font-size: 3.5rem;
             transition: transform 0.2s ease;
@@ -193,18 +193,16 @@
             border-color: #94a3b8;
         }
 
-        /* Responsive design */
+        /* Mobielvriendelijk schakelen naar minder kolommen bij kleine schermen */
+        @media (max-width: 1024px) {
+            .dashboard-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        }
         @media (max-width: 768px) {
-            .top-navbar {
-                padding: 1.5rem;
-                flex-direction: column;
-                text-align: center;
-                gap: 1.5rem;
-            }
-            .dashboard-grid {
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                gap: 1.5rem;
-            }
+            .top-navbar { padding: 1.5rem; flex-direction: column; text-align: center; gap: 1.5rem; }
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -228,13 +226,6 @@
                     <img src="SNAPPET.jpeg" alt="Snappet logo" class="app-logo">
                 </div>
                 <span class="app-title">Snappet</span>
-            </a>
-
-            <a href="tafels/index.html" class="app-card card-auto">
-                <div class="logo-container">
-                    <i class="fa-solid fa-calculator app-icon"></i>
-                </div>
-                <span class="app-title">Automatiseren</span>
             </a>
 
             <a href="https://www.spellingoefenen.nl/" target="_blank" class="app-card card-spelling">
@@ -263,6 +254,13 @@
                     <i class="fa-solid fa-earth-americas app-icon"></i>
                 </div>
                 <span class="app-title">Topografie</span>
+            </a>
+
+            <a href="tafels/index.html" class="app-card card-auto">
+                <div class="logo-container">
+                    <i class="fa-solid fa-calculator app-icon"></i>
+                </div>
+                <span class="app-title">Automatiseren</span>
             </a>
 
             <div class="app-card placeholder">
