@@ -145,6 +145,12 @@
             transition: transform 0.2s ease;
         }
 
+        /* NIEUW: Extra grote instelling specifiek voor de geüploade JPEG logo's */
+        .xl-logo {
+            max-height: 140px !important;  /* Flink verhoogd zodat tekst leesbaar wordt */
+            max-width: 100% !important;   /* Mag de volledige breedte van de tegel benutten */
+        }
+
         .app-icon {
             font-size: 3.5rem;
             transition: transform 0.2s ease;
@@ -201,14 +207,14 @@
 
             <a href="Scoren!.html" class="app-card card-rekenen">
                 <div class="logo-container">
-                    <img src="Rekenen.jpeg" alt="Rekenen logo" class="app-logo">
+                    <img src="Rekenen.jpeg" alt="Rekenen logo" class="app-logo xl-logo">
                 </div>
                 <span class="app-title">Rekenen</span>
             </a>
 
             <a href="tafels/index.html" class="app-card card-auto">
                 <div class="logo-container">
-                    <img src="Automatiseren.jpeg" alt="Automatiseren logo" class="app-logo">
+                    <img src="Automatiseren.jpeg" alt="Automatiseren logo" class="app-logo xl-logo">
                 </div>
                 <span class="app-title">Automatiseren</span>
             </a>
