@@ -3,244 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBS De Eendragt - Startscherm</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght=600;800&family=Open+Sans:wght=400;600&display=swap" rel="stylesheet">
-    
+    <title>CBS De Eendragt - Startpagina</title>
     <style>
-        :root {
-            --primary-navy: #0f2c59;
-            --text-dark: #334155;
-            --border-color: #e2e8f0;
-            
-            /* NIEUWE MATCHENDE KLEUREN */
-            --color-snappet: #f97316;
-            --color-rekenen: #027c8d; /* Perfect match teal/groenblauw */
-            --color-auto: #0a3b5c;    /* Perfect match diep oceaanblauw */
-            --color-spelling: #1e293b;
-            --color-taal: #9333ea;
-            --color-faqta: #1e3a8a;
-            --color-topo: #2563eb;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #f1f5f9;
-            color: var(--text-dark);
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            min-height: 100vh;
         }
 
-        /* Navigatiebalk bovenin */
-        .top-navbar {
-            background-color: var(--primary-navy);
-            width: 100%;
-            padding: 1.5rem 3rem;
+        /* Header Styling */
+        header {
+            background-color: #0d2c54;
+            color: white;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .brand-container h1 {
-            font-family: 'Nunito', sans-serif;
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 0.2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .brand-container p {
-            font-size: 1.1rem;
-            color: #ffffff;
-            opacity: 0.9;
-            font-weight: 400;
+        .header-left h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
-        .profile-container {
+        .header-left p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: #a3b8cc;
+        }
+
+        .profile-area {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 15px;
         }
 
         .profile-pic {
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.2);
             object-fit: cover;
+            border: 2px solid #ffffff;
         }
 
-        /* Dashboard Grid */
-        .main-content {
-            width: 100%;
-            max-width: 1400px;
-            padding: 4rem 2rem;
+        /* Grid Container */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex-grow: 1;
         }
 
-        .dashboard-grid {
+        .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2.5rem;
-            width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
         }
 
-        /* App Tegels Base met dunne rand */
-        .app-card {
-            background-color: #ffffff;
-            border: 2px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2.5rem 1.5rem;
+        /* Card Styling */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
+            padding: 30px 20px;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            transition: all 0.25s ease-in-out;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            height: 240px;
-        }
-
-        .app-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        /* Gekleurde randen */
-        .card-snappet { border-color: var(--color-snappet); }
-        .card-rekenen { border-color: var(--color-rekenen); }
-        .card-auto { border-color: var(--color-auto); }
-        .card-spelling { border-color: var(--color-spelling); }
-        .card-taal { border-color: var(--color-taal); }
-        .card-faqta { border-color: var(--color-faqta); }
-        .card-topo { border-color: var(--color-topo); }
-
-        /* Container voor Logo's/Iconen */
-        .logo-container {
-            height: 90px;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            width: 100%;
-            margin-top: 0.5rem;
+            border: 2px solid transparent;
         }
 
-        .app-logo {
-            max-height: 100%;
-            max-width: 90%;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Unieke randkleuren per vak */
+        .card-snappet { border-color: #ff9f43; }
+        .card-rekenen { border-color: #feca57; }
+        .card-automatiseren { border-color: #ff6b6b; }
+        .card-spelling { border-color: #54a0ff; }
+        .card-taal { border-color: #a55eea; }
+        .card-faqta { border-color: #48dbfb; }
+        .card-topografie { border-color: #1dd1a1; }
+
+        .card img {
+            height: 70px;
+            max-width: 180px;
             object-fit: contain;
-            transition: transform 0.2s ease;
+            margin-bottom: 20px;
         }
 
-        /* Extra grote instelling specifiek voor de geüploade logo's */
-        .xl-logo {
-            max-height: 140px !important;  
-            max-width: 100% !important;   
-        }
-
-        .app-card:hover .app-logo {
-            transform: scale(1.06);
-        }
-
-        .app-title {
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary-navy);
-            text-align: center;
-            margin-top: auto;
-        }
-
-        /* Mobielvriendelijk */
-        @media (max-width: 1024px) {
-            .dashboard-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-        }
-        @media (max-width: 768px) {
-            .top-navbar { padding: 1.5rem; flex-direction: column; text-align: center; gap: 1.5rem; }
-            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 480px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
+        .card span {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0d2c54;
         }
     </style>
 </head>
 <body>
 
-    <nav class="top-navbar">
-        <div class="brand-container">
+    <header>
+        <div class="header-left">
             <h1>CBS De Eendragt</h1>
             <p>Lef • Liefde • Leren • Leuk</p>
         </div>
-        <div class="profile-container">
-            <img src="profiel.jpg" alt="Leerkracht profiel" class="profile-pic">
-        </nav>
+        <div class="profile-area">
+            <img src="profiel.jpg" alt="Profielfoto" class="profile-pic">
+        </div>
+    </header>
 
-    <main class="main-content">
-        <div class="dashboard-grid">
+    <div class="container">
+        <div class="grid">
             
-            <a href="https://teacher.snappet.org/" target="_blank" class="app-card card-snappet">
-                <div class="logo-container">
-                    <img src="SNAPPET.jpeg" alt="Snappet logo" class="app-logo">
-                </div>
-                <span class="app-title">Snappet</span>
+            <a href="https://snappet.org" target="_blank" class="card card-snappet">
+                <img src="SNAPPET.jpeg" alt="Snappet">
+                <span>Snappet</span>
             </a>
 
-            <a href="Scoren!.html" class="app-card card-rekenen">
-                <div class="logo-container">
-                    <img src="Rekenen.jpeg" alt="Rekenen logo" class="app-logo xl-logo">
-                </div>
-                <span class="app-title">Rekenen</span>
+            <a href="rekenen-keuze.html" class="card card-rekenen">
+                <img src="Rekenen.jpeg" alt="Rekenen">
+                <span>Rekenen</span>
             </a>
 
-            <a href="tafels/index.html" class="app-card card-auto">
-                <div class="logo-container">
-                    <img src="Automatiseren.jpeg" alt="Automatiseren logo" class="app-logo xl-logo">
-                </div>
-                <span class="app-title">Automatiseren</span>
+            <a href="tafels/tafels.html" class="card card-automatiseren">
+                <img src="Automatiseren.jpeg" alt="Automatiseren">
+                <span>Automatiseren</span>
             </a>
 
-            <a href="https://www.spellingoefenen.nl/" target="_blank" class="app-card card-spelling">
-                <div class="logo-container">
-                    <img src="spellinglogo.png" alt="Spellingoefenen logo" class="app-logo">
-                </div>
-                <span class="app-title">Spellingoefenen</span>
+            <a href="https://www.spellingoefenen.nl" target="_blank" class="card card-spelling">
+                <img src="spellinglogo.png" alt="Spellingoefenen">
+                <span>Spellingoefenen</span>
             </a>
 
-            <a href="https://www.taaloefenen.nl/" target="_blank" class="app-card card-taal">
-                <div class="logo-container">
-                    <img src="TO logo.png" alt="Taaloefenen logo" class="app-logo">
-                </div>
-                <span class="app-title">Taaloefenen</span>
+            <a href="https://www.taaloefenen.nl" target="_blank" class="card card-taal">
+                <img src="SO logo.jpeg" alt="Taaloefenen">
+                <span>Taaloefenen</span>
             </a>
 
-            <a href="https://dashboard.faqta.nl/" target="_blank" class="app-card card-faqta">
-                <div class="logo-container">
-                    <img src="Faqta logo.png" alt="Faqta logo" class="app-logo">
-                </div>
-                <span class="app-title">Faqta</span>
+            <a href="https://www.faqta.nl" target="_blank" class="card card-faqta">
+                <img src="Faqta logo.png" alt="Faqta">
+                <span>Faqta</span>
             </a>
 
-            <a href="topografie.html" class="app-card card-topo">
-                <div class="logo-container">
-                    <img src="Topografie.png" alt="Topografie logo" class="app-logo xl-logo">
-                </div>
-                <span class="app-title">Topografie</span>
+            <a href="topografie.html" class="card card-topografie">
+                <img src="Topografie.png" alt="Topografie">
+                <span>Topografie</span>
             </a>
 
         </div>
-    </main>
+    </div>
 
 </body>
 </html>
