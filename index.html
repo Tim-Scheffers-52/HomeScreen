@@ -126,7 +126,6 @@
         .card-taal { border-color: var(--color-taal); }
         .card-faqta { border-color: var(--color-faqta); }
         .card-topo { border-color: var(--color-topo); }
-        .card-topo .app-icon { color: var(--color-topo); }
 
         /* Container voor Logo's/Iconen */
         .logo-container {
@@ -145,10 +144,10 @@
             transition: transform 0.2s ease;
         }
 
-        /* NIEUW: Extra grote instelling specifiek voor de geüploade JPEG logo's */
+        /* Extra grote instelling specifiek voor de geüploade JPEG/PNG logo's */
         .xl-logo {
-            max-height: 140px !important;  /* Flink verhoogd zodat tekst leesbaar wordt */
-            max-width: 100% !important;   /* Mag de volledige breedte van de tegel benutten */
+            max-height: 140px !important;  
+            max-width: 100% !important;   
         }
 
         .app-icon {
@@ -242,7 +241,7 @@
 
             <a href="topografie.html" class="app-card card-topo">
                 <div class="logo-container">
-                    <i class="fa-solid fa-earth-americas app-icon"></i>
+                    <img src="Topografie logo.png" alt="Topografie logo" class="app-logo xl-logo">
                 </div>
                 <span class="app-title">Topografie</span>
             </a>
