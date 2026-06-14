@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Rekenwinkel - Full Euro Cash Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --mc-bg: #11141a;
+            --mc-panel: #2e2e2e;
+            --mc-border: #4a4a4a;
+            --mc-inner-border: #8b8b8b;
+            --mc-text-green: #55ff55;
+            --mc-text-yellow: #ffff55;
+            --mc-gold: #ffaa00;
+            --mc-wood: #5c4028;
+            
+            /* Euro Kleuren */
+            --euro-5: #a2b5cd;
+            --euro-10: #ea9999;
+            --euro-20: #8baed4;
+            --euro-50: #f5b041;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background-color: var(--mc-bg);
+            font-family: 'Press Start 2P', monospace;
+            color: #ffffff;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* --- START SCHERM (Karakter Selectie) --- */
+        #char-select-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #1e283d 0%, #0b0e14 100%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 35px;
+        }
+
+        .select-title {
+            font-size: 16px;
+            color: #55ffff;
+            text-shadow: 3px 3px 0 #000;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .char-options {
+            display: flex;
+            gap: 40px;
+        }
+
+        .char-card {
+            background: #3c3c3c;
+            border: 6px solid var(--mc-border);
+            padding: 25px;
+            cursor: pointer;
+            text-align: center;
+            width: 160px;
+            box-shadow: 0 10px 0 #000;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .char-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--mc-text-green);
+        }
+
+        .char-avatar {
+            font-size: 60px;
+            margin-bottom: 15px;
+            display: block;
+            filter: drop-shadow(3px 3px 0px #000);
+        }
+
+        /* --- HOOFD LAYOUT --- */
+        .game-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* --- BOVENBALK (HUD) --- */
+        .hud-top {
+            background-color: #000000;
+            border-bottom: 5px solid #3c3c3c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            z-index: 10;
+        }
+
+        .hud-item {
+            font-size: 12px;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        /* --- CENTRALE ISOMETRISCHE WINKELOMGEVING --- */
+        .shop-floorplan {
+            flex-grow: 1;
+            position: relative;
+            background: #181818;
+            background-image: 
+                linear-gradient(#222 2px, transparent 2px),
+                linear-gradient(90deg, #222 2px, transparent 2px);
+            background-size: 40px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .isometric-scene {
+            position: relative;
+            width: 1100px;
+            height: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-bottom: 40px;
+            box-sizing: border-box;
+        }
+
+        /* --- LINKS: DE VITRINEKAST --- */
+        .showcase-cabinet {
+            width: 280px;
+            background: #252525;
+            border: 5px solid var(--mc-gold);
+            padding: 12px;
+            box-shadow: 0 10px 0 #000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cabinet-header {
+            font-size: 10px;
+            color: var(--mc-gold);
+            text-align: center;
+            border-bottom: 3px double var(--mc-gold);
+            padding-bottom: 6px;
+            margin-bottom: 4px;
+        }
+
+        .product-row {
+            background: #1a1a1a;
+            border: 4px solid var(--mc-border);
+            padding: 12px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 9px;
+            line-height: 1.5;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .product-row:hover {
+            background: #2a2a2a;
+            border-color: var(--mc-text-yellow);
+        }
+
+        .product-row.selected {
+            background: #193319;
+            border-color: var(--mc-text-green);
+            box-shadow: inset 0 0 10px rgba(85, 255, 85, 0.3);
+        }
+
+        .product-row .item-art {
+            font-size: 28px;
+            filter: drop-shadow(2px 2px 0px #000);
+        }
+
+        /* --- MIDDEN: DE TOONBANK MET VISUEEL GELD --- */
+        .counter-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 460px;
+        }
+
+        .dialogue-bubble {
+            background: #ffffff;
+            color: #000000;
+            border: 4px solid #000000;
+            padding: 14px;
+            font-size: 10px;
+            line-height: 1.6;
+            width: 380px;
+            text-align: center;
+            position: absolute;
+            top: -150px;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+            border-radius: 4px;
+            z-index: 5;
+        }
+        .dialogue-bubble::after {
+            content: ''; position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
+            border: 8px solid transparent; border-top-color: #000000;
+        }
+
+        .character-sprite {
+            font-size: 75px;
+            filter: drop-shadow(4px 4px 0px #000);
+            margin-bottom: -5px;
+            z-index: 2;
+        }
+
+        .solid-counter {
+            width: 440px;
+            height: 80px;
+            background: #9c6233;
+            border: 5px solid var(--mc-wood);
+            box-shadow: 0 8px 0 #000;
+            z-index: 3;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .counter-label {
+            font-size: 8px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
+        }
+
+        .cash-on-counter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            width: 95%;
+            height: 45px;
+            margin-top: 2px;
+            overflow: visible;
+        }
+
+        /* Geld assets styling */
+        .visual-coin {
+            width: 28px; height: 28px;
+            background: #55ff55;
+            border: 2px solid #00aa00;
+            border-radius: 4px;
+            color: #000; font-size: 9px; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 2px 2px 0 #000, inset -2px -2px 0 #007700;
+            animation: dropMoney 0.12s ease-out;
+        }
+
+        .visual-bill {
+            height: 26px;
+            border-radius: 2px;
+            color: #000; font-size: 9px; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 2px 2px 0 #000;
+            animation: dropMoney 0.12s ease-out;
+        }
+        .v-5 { width: 38px; background: var(--euro-5); border: 2px solid #5d7593; box-shadow: 2px 2px 0 #000, inset -2px -2px 0 #43556d; }
+        .v-10 { width: 42px; background: var(--euro-10); border: 2px solid #b76c6c; box-shadow: 2px 2px 0 #000, inset -2px -2px 0 #8c4c4c; }
+        .v-20 { width: 46px; background: var(--euro-20); border: 2px solid #4a77a5; box-shadow: 2px 2px 0 #000, inset -2px -2px 0 #325578; }
+        .v-50 { width: 50px; background: var(--euro-50); border: 2px solid #b97712; box-shadow: 2px 2px 0 #000, inset -2px -2px 0 #875407; }
+
+        @keyframes dropMoney {
+            0% { transform: translateY(-15px) scale(0.7); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* --- RECHTS: DE HERO EN BETAALKIST --- */
+        .payment-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 220px;
+            margin-bottom: 20px;
+        }
+
+        .chest-object {
+            width: 110px;
+            height: 95px;
+            background: #8f592d;
+            border: 5px solid var(--mc-wood);
+            box-sizing: border-box;
+            position: relative;
+            box-shadow: 0 8px 0 #000;
+            transition: transform 0.1s ease, border-color 0.1s;
+        }
+        .chest-object::after {
+            content: ''; position: absolute; top: 15px; left: 42px;
+            width: 14px; height: 20px; background: #dfdfdf; border: 2px solid #000;
+        }
+
+        .chest-label {
+            font-size: 9px;
+            margin-top: 15px;
+            color: #777;
+            text-align: center;
+        }
+
+        .chest-flash {
+            border-color: var(--mc-text-green) !important;
+            transform: scale(1.08);
+            box-shadow: 0 0 25px var(--mc-text-green);
+        }
+
+        /* --- ONDERBALK (HOTBAR & INSTRUCTIE) --- */
+        .hud-bottom {
+            background-color: #000000;
+            border-top: 5px solid #3c3c3c;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .instruction-banner {
+            background: #1a1a1a;
+            border: 3px solid var(--mc-gold);
+            padding: 12px 30px;
+            font-size: 11px;
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            line-height: 1.5;
+            box-sizing: border-box;
+        }
+
+        .hotbar-container {
+            display: flex;
+            background: #8f8f8f;
+            border: 4px solid #3c3c3c;
+            padding: 5px;
+            gap: 8px;
+        }
+
+        .hotbar-slot {
+            width: 76px; height: 76px;
+            background: #8b8b8b;
+            border: 4px inset #dfdfdf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .hotbar-slot:hover {
+            background: #999;
+            border-style: outset;
+        }
+
+        /* Hotbar knoppen styling conform Euro's */
+        .coin-btn {
+            width: 54px; height: 54px;
+            background: var(--mc-text-green);
+            border: 3px solid #00aa00;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; color: #000; font-weight: bold;
+            box-shadow: inset -4px -4px 0 #007700;
+        }
+        
+        .bill-btn {
+            width: 60px; height: 42px;
+            border-radius: 2px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: #000; font-weight: bold;
+        }
+        .b-5 { background: var(--euro-5); border: 3px solid #5d7593; box-shadow: inset -4px -4px 0 #43556d; }
+        .b-10 { background: var(--euro-10); border: 3px solid #b76c6c; box-shadow: inset -4px -4px 0 #8c4c4c; }
+        .b-20 { background: var(--euro-20); border: 3px solid #4a77a5; box-shadow: inset -4px -4px 0 #325578; }
+        .b-50 { background: var(--euro-50); border: 3px solid #b97712; box-shadow: inset -4px -4px 0 #875407; }
+        
+        .btn-clear { width: 54px; height: 54px; background: #ff5555; border: 3px solid #aa0000; color: #fff; box-shadow: inset -4px -4px 0 #770000; font-size: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="char-select-screen">
+        <div class="select-title">MINECRAFT REKENWINKEL v3.0<br>Kies je karakter om de winkel te betreden:</div>
+        <div class="char-options">
+            <div class="char-card" onclick="startStoreGame('Steve', '🧑‍🌾')">
+                <span class="char-avatar">🧑‍🌾</span>
+                <span>STEVE</span>
+            </div>
+            <div class="char-card" onclick="startStoreGame('Alex', '👩‍🌾')">
+                <span class="char-avatar">👩‍🌾</span>
+                <span>ALEX</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        
+        <div class="hud-top">
+            <div class="hud-item" id="player-tag">Karakter: -</div>
+            <div class="hud-item" id="level-tag" style="color: #55ffff;">LEVEL: 1</div>
+            <div class="hud-item" id="streak-tag" style="color: var(--mc-text-green);">STREAK: 0/3</div>
+            <div class="hud-item" id="wallet-tag" style="color: var(--mc-text-yellow);">OP TOONBANK: € 0</div>
+        </div>
+
+        <div class="shop-floorplan">
+            <div class="isometric-scene">
+                
+                <div class="showcase-cabinet">
+                    <div class="cabinet-header">VITRINEKAST</div>
+                    
+                    <div class="product-row" id="row-0" onclick="clickCabinetProduct(0)">
+                        <div class="item-art" id="art-0">⚔️</div>
+                        <div><span id="title-0">Laden...</span><br><b style="color:#ff5555;" id="cost-0">€ 0,00</b></div>
+                    </div>
+
+                    <div class="product-row" id="row-1" onclick="clickCabinetProduct(1)">
+                        <div class="item-art" id="art-1">⛏️</div>
+                        <div><span id="title-1">Laden...</span><br><b style="color:#ff5555;" id="cost-1">€ 0,00</b></div>
+                    </div>
+
+                    <div class="product-row" id="row-2" onclick="clickCabinetProduct(2)">
+                        <div class="item-art" id="art-2">🍎</div>
+                        <div><span id="title-2">Laden...</span><br><b style="color:#ff5555;" id="cost-2">€ 0,00</b></div>
+                    </div>
+                </div>
+
+                <div class="counter-zone">
+                    <div class="dialogue-bubble" id="villager-speech">
+                        Hrrr... Kies een mooi product uit mijn vitrinekast aan de linkerkant!
+                    </div>
+                    <div class="character-sprite">👃</div>
+                    
+                    <div class="solid-counter">
+                        <span class="counter-label">TOONBANK</span>
+                        <div class="cash-on-counter" id="counter-cash-container">
+                            </div>
+                    </div>
+                </div>
+
+                <div class="payment-zone">
+                    <div class="character-sprite" id="hero-avatar" style="font-size: 55px;">🧑‍🌾</div>
+                    <div class="chest-object" id="visual-chest"></div>
+                    <div class="chest-label">KLUIS / KIST</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="hud-bottom">
+            <div class="instruction-banner" id="guide-banner">
+                STAP 1: Klik op een item in de vitrinekast om de prijs te bekijken.
+            </div>
+
+            <div class="hotbar-container">
+                <div class="hotbar-slot" onclick="addCashToCounter(1)">
+                    <div class="coin-btn">€1</div>
+                </div>
+                <div class="hotbar-slot" onclick="addCashToCounter(5)">
+                    <div class="bill-btn b-5">€5</div>
+                </div>
+                <div class="hotbar-slot" onclick="addCashToCounter(10)">
+                    <div class="bill-btn b-10">€10</div>
+                </div>
+                <div class="hotbar-slot" onclick="addCashToCounter(20)">
+                    <div class="bill-btn b-20">€20</div>
+                </div>
+                <div class="hotbar-slot" onclick="addCashToCounter(50)">
+                    <div class="bill-btn b-50">€50</div>
+                </div>
+                <div class="hotbar-slot" onclick="clearCounter()">
+                    <div class="btn-clear flex-center" style="display:flex;align-items:center;justify-content:center;">Wis</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let level = 1;
+        let streak = 0;
+        let depositSum = 0;
+        let roundedTargetPrice = 0;
+        let chosenIndex = null;
+        let shelfProducts = [];
+
+        const itemsPool = [
+            { name: "Diamond Sword", icon: "⚔️" },
+            { name: "Iron Pickaxe", icon: "⛏️" },
+            { name: "Golden Apple", icon: "🍎" },
+            { name: "Ender Pearl", icon: "🔮" },
+            { name: "Enchanted Book", icon: "📘" },
+            { name: "Netherite Chestplate", icon: "👕" },
+            { name: "Cooked Salmon", icon: "🐟" }
+        ];
+
+        function startStoreGame(name, icon) {
+            document.getElementById('char-select-screen').style.display = 'none';
+            document.getElementById('player-tag').innerText = `SPELER: ${name.toUpperCase()}`;
+            document.getElementById('hero-avatar').innerText = icon;
+            generateFreshShelf();
+        }
+
+        function generateFreshShelf() {
+            depositSum = 0;
+            chosenIndex = null;
+            shelfProducts = [];
+            document.getElementById('wallet-tag').innerText = "OP TOONBANK: € 0";
+            document.getElementById('counter-cash-container').innerHTML = ""; 
+
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`row-${i}`).classList.remove('selected');
+                
+                let randomMeta = itemsPool[Math.floor(Math.random() * itemsPool.length)];
+                let financialData = buildAdaptivePrice();
+
+                shelfProducts.push({
+                    name: randomMeta.name,
+                    icon: randomMeta.icon,
+                    displayPrice: financialData.display,
+                    targetPrice: financialData.target
+                });
+
+                document.getElementById(`art-${i}`).innerText = randomMeta.icon;
+                document.getElementById(`title-${i}`).innerText = randomMeta.name;
+                document.getElementById(`cost-${i}`).innerText = `€ ${financialConfigText(financialData.display)}`;
+            }
+
+            document.getElementById('villager-speech').innerText = "Hrrr... Welk voorwerp wil je kopen? Klik erop!";
+            document.getElementById('guide-banner').innerText = "STAP 1: Selecteer een item uit de vitrinekast aan de linkerkant.";
+        }
+
+        function financialConfigText(val) {
+            return typeof val === 'number' ? val.toFixed(2).replace('.', ',') : val;
+        }
+
+        function buildAdaptivePrice() {
+            if (level === 1) {
+                let raw = (Math.random() * 20 + 3);
+                return { display: raw, target: Math.round(raw) };
+            } else if (level === 2) {
+                let raw = Math.floor(Math.random() * 80 + 15);
+                return { display: raw + ",00", target: Math.round(raw / 10) * 10 };
+            } else {
+                let p1 = (Math.random() * 35 + 5);
+                let p2 = (Math.random() * 35 + 5);
+                let combinedStr = p1.toFixed(2).replace('.', ',') + " + € " + p2.toFixed(2).replace('.', ',');
+                return { display: combinedStr, target: Math.round(p1) + Math.round(p2) };
+            }
+        }
+
+        function clickCabinetProduct(index) {
+            chosenIndex = index;
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`row-${i}`).classList.remove('selected');
+            }
+            document.getElementById(`row-${index}`).classList.add('selected');
+
+            let item = shelfProducts[index];
+            roundedTargetPrice = item.targetPrice;
+
+            let explanation = level === 1 ? "op hele euro's" : level === 2 ? "op het dichtstbijzijnde tiental" : "door beide bedragen eerst af te ronden";
+            
+            document.getElementById('villager-speech').innerText = `Hrrr! De ${item.name} kost € ${financialConfigText(item.displayPrice)}. Rond dit bedrag af ${explanation}!`;
+            document.getElementById('guide-banner').innerText = "STAP 2: Leg het juiste geld op de toonbank met de knoppen onderin.";
+        }
+
+        function addCashToCounter(amount) {
+            if (chosenIndex === null) {
+                document.getElementById('guide-banner').innerText = "❌ Fout: Selecteer eerst een product uit de vitrinekast!";
+                return;
+            }
+
+            depositSum += amount;
+            document.getElementById('wallet-tag').innerText = `OP TOONBANK: € ${depositSum}`;
+
+            const container = document.getElementById('counter-cash-container');
+            
+            if (amount === 1) {
+                const coinEl = document.createElement('div');
+                coinEl.className = 'visual-coin';
+                coinEl.innerText = '€1';
+                container.appendChild(coinEl);
+            } else {
+                const billEl = document.createElement('div');
+                billEl.className = `visual-bill v-${amount}`;
+                billEl.innerText = `€${amount}`;
+                container.appendChild(billEl);
+            }
+
+            verifyTransaction();
+        }
+
+        function clearCounter() {
+            depositSum = 0;
+            document.getElementById('wallet-tag').innerText = "OP TOONBANK: € 0";
+            document.getElementById('counter-cash-container').innerHTML = "";
+        }
+
+        function verifyTransaction() {
+            if (depositSum === roundedTargetPrice) {
+                streak++;
+                document.getElementById('villager-speech').innerText = "Hrrr! Uitstekend gerekend! Dat klopt precies. Ik neem het geld aan.";
+                document.getElementById('guide-banner').innerHTML = "<span style='color: var(--mc-text-green);'>✔️ Transactie succesvol afgerond!</span>";
+
+                const chest = document.getElementById('visual-chest');
+                setTimeout(() => {
+                    chest.classList.add('chest-flash');
+                    document.getElementById('counter-cash-container').innerHTML = ""; 
+                }, 300);
+                
+                setTimeout(() => chest.classList.remove('chest-flash'), 600);
+
+                if (streak >= 3) {
+                    level++;
+                    streak = 0;
+                    document.getElementById('guide-banner').innerHTML = "<span style='color: #55ffff;'>🏆 Level omhoog! De opgaven worden uitdagender!</span>";
+                }
+
+                syncUI();
+                setTimeout(generateFreshShelf, 2500);
+            } 
+            else if (depositSum > roundedTargetPrice) {
+                streak = 0;
+                document.getElementById('villager-speech').innerText = `Hrrr! Nee, dat is te veel geld op de toonbank! Het moest € ${roundedTargetPrice} zijn.`;
+                document.getElementById('guide-banner').innerHTML = "<span style='color: #ff5555;'>❌ Te veel betaald. Neem je geld terug en probeer het opnieuw.</span>";
+                
+                syncUI();
+                setTimeout(generateFreshShelf, 2800);
+            }
+        }
+
+        function syncUI() {
+            document.getElementById('level-tag').innerText = `LEVEL: ${level}`;
+            document.getElementById('streak-tag').innerText = `STREAK: ${streak}/3`;
+        }
+    </script>
+</body>
+</html>
