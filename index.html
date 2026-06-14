@@ -111,6 +111,7 @@
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             height: 240px;
+            cursor: pointer;
         }
 
         .app-card:hover {
@@ -207,12 +208,12 @@
                 <span class="app-title">Snappet</span>
             </a>
 
-            <a href="rekenen.html" class="app-card card-rekenen">
+            <div class="app-card card-rekenen" onclick="openRekenen()">
                 <div class="logo-container">
                     <i class="fa-solid fa-calculator app-icon"></i>
                 </div>
                 <span class="app-title">Rekenen</span>
-            </a>
+            </div>
 
             <a href="tafels/index.html" class="app-card card-auto">
                 <div class="logo-container">
@@ -251,6 +252,26 @@
 
         </div>
     </main>
+
+    <script>
+        function openRekenen() {
+            // Deze functie probeert eerst te kijken of 'rekenen.html' laadt, 
+            // en stuurt anders door naar 'Rekenen.html' om hoofdletterfouten te voorkomen.
+            var targetUrl = "rekenen.html";
+            
+            fetch(targetUrl)
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = targetUrl;
+                    } else {
+                        window.location.href = "Rekenen.html";
+                    }
+                })
+                .catch(() => {
+                    window.location.href = "Rekenen.html";
+                });
+        }
+    </script>
 
 </body>
 </html>
