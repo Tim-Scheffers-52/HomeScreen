@@ -3,168 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBS De Eendragt - Startpagina</title>
+    <title>CBS De Eendragt - Dashboard</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
-
-        body, html {
+        body {
             margin: 0; padding: 0;
-            width: 100%; height: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f4f8;
             color: #333333;
         }
 
-        /* Originele bovenbalk */
         .main-header {
             background-color: #0d3c6c;
             color: #ffffff;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 15px 40px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .main-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
-        .main-header p { margin: 5px 0 0 0; font-size: 14px; color: #b0cbe8; }
+        .main-header p { margin: 5px 0 0 0; font-size: 14px; opacity: 0.8; }
 
-        /* Grid voor de tegels */
         .grid-container {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
-            box-sizing: border-box;
         }
 
-        /* Originele tegel styling */
-        .tile {
+        .menu-card {
             background: #ffffff;
+            border: 3px solid;
             border-radius: 16px;
-            padding: 20px;
+            padding: 25px 15px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
             text-decoration: none;
-            color: inherit;
+            color: #0d3c6c;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: transform 0.15s, box-shadow 0.15s;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            height: 200px;
+            min-height: 180px;
             box-sizing: border-box;
-        }
-        .tile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
         }
 
-        .tile-img-container {
-            width: 100%;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .menu-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
         }
 
-        .tile img {
-            max-width: 100%;
-            max-height: 90px;
+        .menu-card img {
+            max-height: 80px;
+            max-width: 80%;
             object-fit: contain;
+            margin-bottom: 15px;
         }
 
-        .tile-emoji {
-            font-size: 60px;
-            line-height: 90px;
-        }
+        /* Originele tegel-kleuren */
+        .card-snappet { border-color: #ff7a00; }
+        .card-rekenen { border-color: #00a3a3; }
+        .card-automatiseringen { border-color: #333333; }
+        .card-spelling { border-color: #4b5563; }
+        .card-taal { border-color: #8b5cf6; }
+        .card-faqta { border-color: #2563eb; }
+        .card-topo { border-color: #059669; }
+        .card-engels { border-color: #a855f7; }
 
-        .tile-title { margin: 10px 0 0 0; font-size: 18px; color: #0d3c6c; font-weight: 600; }
-
-        /* De randkleuren */
-        .border-orange { border: 3px solid #ff7a00; }
-        .border-teal { border: 3px solid #00a3a3; }
-        .border-dark { border: 3px solid #333333; }
-        .border-purple { border: 3px solid #7f56d9; }
-        .border-blue { border: 3px solid #3182ce; }
-
-        /* ==================================================================
-           POP-UP (MODAL) STYLING VOOR REKENEN & ENGELS
-           ================================================================== */
+        /* Modal / Keuzemenu Styling */
         .modal-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
             display: none;
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
 
         .modal-content {
-            background-color: #f0f4f8;
-            width: 95%;
-            max-width: 1100px;
-            height: 90vh;
+            background: #ffffff;
             border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            display: flex;
-            flex-direction: column;
-            animation: popUp 0.25s ease-out;
-        }
-
-        #rekenen-modal .modal-content {
+            width: 90%;
             max-width: 600px;
-            height: auto;
-            max-height: 80vh;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: fadeIn 0.2s ease-out;
         }
 
-        @keyframes popUp {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .tool-header {
-            background-color: #0d3c6c;
-            color: #ffffff;
-            padding: 15px 30px;
+        .modal-header {
+            background: #0d3c6c;
+            color: white;
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 20px;
+            font-weight: bold;
         }
-        .tool-header h2 { margin: 0; font-size: 20px; }
-        
+
         .close-btn {
-            background-color: #ef4444;
+            background: #ef4444;
             color: white;
             border: none;
             padding: 8px 16px;
             border-radius: 6px;
-            font-weight: bold;
             cursor: pointer;
-            transition: background 0.15s;
-        }
-        .close-btn:hover { background-color: #b91c1c; }
-
-        .tool-body {
-            padding: 25px;
-            overflow-y: auto;
-            flex-grow: 1;
+            font-weight: bold;
         }
 
-        /* Rekenen Menu Knoppen */
-        .rekenen-menu-container {
+        .modal-body {
+            padding: 30px;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            padding: 20px 10px;
         }
-        .rekenen-btn {
+
+        .modal-btn {
             background: white;
             border: 3px solid #00a3a3;
             border-radius: 12px;
@@ -174,249 +133,83 @@
             color: #0d3c6c;
             text-decoration: none;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            transition: transform 0.15s, background-color 0.15s;
+            transition: background 0.1s;
         }
-        .rekenen-btn:hover {
-            transform: scale(1.02);
-            background-color: #f0fdfa;
+        .modal-btn:hover {
+            background: #e6fffa;
         }
 
-        /* Engels lijst styling */
-        .info-card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.01);
-            border-left: 5px solid #7f56d9;
-            font-size: 14px;
-            line-height: 1.5;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
-
-        .word-list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .word-row {
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            display: flex;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
-        }
-
-        .col-en, .col-nl {
-            width: 50%;
-            padding: 15px 20px;
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            transition: background-color 0.15s;
-        }
-        .col-en { border-right: 2px dashed #e2e8f0; background-color: #ffffff; }
-        .col-nl { background-color: #f8fafc; }
-        .col-en:hover { background-color: #f8fafc; }
-        .col-nl:hover { background-color: #f1f5f9; }
-
-        .word-text { font-size: 17px; font-weight: 700; color: #0d3c6c; margin-bottom: 3px; }
-        .col-nl .word-text { color: #2c5282; font-style: italic; font-weight: 600; }
-        .example-sentence { font-size: 12px; color: #64748b; line-height: 1.4; }
-
-        .blindfold {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #1e293b;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 13px;
-            letter-spacing: 1px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.15s ease;
-        }
-        .is-hidden .blindfold { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body>
 
     <div class="main-header">
-        <div>
-            <h1>CBS De Eendragt</h1>
-            <p>Lef • Liefde • Leren • Leuk</p>
-        </div>
+        <h1>CBS De Eendragt</h1>
+        <p>Lef • Liefde • Leren • Leuk</p>
     </div>
 
     <div class="grid-container">
-        
-        <a href="https://snappet.org" target="_blank" class="tile border-orange">
-            <div class="tile-img-container"><img src="SNAPPET.jpeg" alt="Snappet"></div>
-            <div class="tile-title">Snappet</div>
+        <a href="https://snappet.org" target="_blank" class="menu-card card-snappet">
+            <img src="SNAPPET.jpeg" alt="Snappet">
+            <div>Snappet</div>
         </a>
 
-        <div class="tile border-teal" onclick="openRekenenMenu()">
-            <div class="tile-img-container"><img src="Rekenen.jpeg" alt="Rekenen"></div>
-            <div class="tile-title">Rekenen</div>
+        <div class="menu-card card-rekenen" onclick="openRekeningMenu()">
+            <img src="Rekenen.jpeg" alt="Rekenen">
+            <div>Rekenen</div>
         </div>
 
-        <a href="tafels/" class="tile border-dark">
-            <div class="tile-img-container"><img src="Automatiseren.jpeg" alt="Automatiseren"></div>
-            <div class="tile-title">Automatiseren</div>
+        <a href="tafels/" class="menu-card card-automatiseringen">
+            <img src="Automatiseren.jpeg" alt="Automatiseren">
+            <div>Automatiseren</div>
         </a>
 
-        <a href="SpellingOefenen.html" class="tile border-dark">
-            <div class="tile-img-container"><img src="SO logo.jpeg" alt="Spellingoefenen"></div>
-            <div class="tile-title">Spellingoefenen</div>
+        <a href="https://www.spellingoefenen.nl" target="_blank" class="menu-card card-spelling">
+            <img src="spellinglogo.png" alt="Spellingoefenen">
+            <div>Spellingoefenen</div>
         </a>
 
-        <a href="TaalOefenen.html" class="tile border-purple">
-            <div class="tile-img-container"><img src="TO logo.png" alt="Taaloefenen"></div>
-            <div class="tile-title">Taaloefenen</div>
+        <a href="https://www.taaloefenen.nl" target="_blank" class="menu-card card-taal">
+            <img src="TO logo.png" alt="Taaloefenen">
+            <div>Taaloefenen</div>
         </a>
 
-        <a href="Faqta.html" class="tile border-blue">
-            <div class="tile-img-container"><img src="Faqta logo.png" alt="Faqta"></div>
-            <div class="tile-title">Faqta</div>
+        <a href="https://www.faqta.nl" target="_blank" class="menu-card card-faqta">
+            <img src="Faqta logo.png" alt="Faqta">
+            <div>Faqta</div>
         </a>
 
-        <a href="topografie.html" class="tile border-blue">
-            <div class="tile-img-container"><img src="Topografie.png" alt="Topografie"></div>
-            <div class="tile-title">Topografie</div>
+        <a href="topografie.html" class="menu-card card-topo">
+            <img src="Topografie.png" alt="Topografie">
+            <div>Topografie</div>
         </a>
-
-        <div class="tile border-purple" onclick="openEnglishTool()">
-            <div class="tile-img-container"><div class="tile-emoji">🇬🇧</div></div>
-            <div class="tile-title">Engels</div>
-        </div>
-
     </div>
 
-
-    <div class="modal-overlay" id="rekenen-modal">
+    <div class="modal-overlay" id="rekenModal">
         <div class="modal-content">
-            <div class="tool-header">
-                <h2>➕ Rekenmenu - Maak je keuze</h2>
-                <button class="close-btn" onclick="closeRekenenMenu()">✖ Sluiten</button>
+            <div class="modal-header">
+                <span>➕ Rekenmenu - Maak je keuze</span>
+                <button class="close-btn" onclick="closeRekeningMenu()">✖ Sluiten</button>
             </div>
-            <div class="tool-body">
-                <div class="rekenen-menu-container">
-                    <a href="scoren.html" class="rekenen-btn">🎯 Scoren!</a>
-                    <a href="minecraft.html" class="rekenen-btn">⛏️ Minecraft spel afronden</a>
-                </div>
+            <div class="modal-body">
+                <a href="scoren.html" class="modal-btn">🎯 Scoren!</a>
+                <a href="minecraft.html" class="modal-btn">⛏ Minecraft spel afronden</a>
             </div>
-        </div>
-    </div>
-
-
-    <div class="modal-overlay" id="english-modal">
-        <div class="modal-content">
-            
-            <div class="tool-header">
-                <h2>🇬🇧 Engels Oefenportaal • Unit 6: Word List</h2>
-                <button class="close-btn" onclick="closeEnglishTool()">✖ Sluiten</button>
-            </div>
-
-            <div class="tool-body">
-                <div class="info-card">
-                    <strong>💡 Hoe werkt het?</strong> Klik op een Engels of Nederlands vakje om het woord te <b>verbergen</b>. Zo kun je jezelf of een klasgenootje makkelijk overhoren! Klik er nogmaals op om het weer te tonen.
-                </div>
-
-                <div class="word-list-container" id="trainer-root">
-                    </div>
-            </div>
-
         </div>
     </div>
 
     <script>
-        // Functies voor Rekenen Popup
-        function openRekenenMenu() {
-            document.getElementById('rekenen-modal').style.display = 'flex';
+        function openRekeningMenu() {
+            document.getElementById('rekenModal').style.display = 'flex';
         }
-        function closeRekenenMenu() {
-            document.getElementById('rekenen-modal').style.display = 'none';
+        function closeRekeningMenu() {
+            document.getElementById('rekenModal').style.display = 'none';
         }
-
-        // Functies voor Engels Popup
-        function openEnglishTool() {
-            document.getElementById('english-modal').style.display = 'flex';
-        }
-        function closeEnglishTool() {
-            document.getElementById('english-modal').style.display = 'none';
-        }
-
-        // De complete woordenlijst van Ruben (Unit 6)
-        const unitSixWords = [
-            { en: "building", nl: "gebouw", sentence: "The buildings look like sailing boats." },
-            { en: "by bike", nl: "met de fiets, op de fiets", sentence: "We go to town by bike." },
-            { en: "by car", nl: "met de auto", sentence: "My mum is taking me to school by car because of the heavy rain." },
-            { en: "church", nl: "kerk", sentence: "The church was built hundreds of years ago." },
-            { en: "crossroads", nl: "kruising", sentence: "Watch out carefully when you cross the crossroads!" },
-            { en: "distance", nl: "afstand", sentence: "The road sign gives the distance to the city centre." },
-            { en: "far away", nl: "ver weg", sentence: "I can't see it, it is too far away." },
-            { en: "fire station", nl: "brandweerkazerne", sentence: "The fire fighters are gathered at the fire station." },
-            { en: "left", nl: "links", sentence: "We have to turn left to get to the railway station." },
-            { en: "library", nl: "bibliotheek", sentence: "I go to the library to get books every week." },
-            { en: "map", nl: "kaart, plattegrond", sentence: "We use a map to find our way." },
-            { en: "on foot", nl: "te voet, lopend", sentence: "We like to go to town on foot." },
-            { en: "park", nl: "park", sentence: "We like to picnic in the park on sunny days." },
-            { en: "police station", nl: "politiebureau", sentence: "The police cars are in front of the police station." },
-            { en: "public transport", nl: "openbaar vervoer", sentence: "Buses are forms of public transport." },
-            { en: "railway station", nl: "treinstation", sentence: "Hundreds of trains a day pass through the railway station." },
-            { en: "right", nl: "rechts", sentence: "Look right to see if it is safe to cross the street." },
-            { en: "road", nl: "weg", sentence: "We are on a road to nowhere." },
-            { en: "roundabout", nl: "rotonde", sentence: "There is not much traffic on the roundabout." },
-            { en: "straight on", nl: "rechtdoor", sentence: "Go straight on to the end of the road." },
-            { en: "town hall", nl: "gemeentehuis, stadhuis", sentence: "We went to the town hall to get new passports." },
-            { en: "traffic jam", nl: "file, verkeersopstopping", sentence: "Because of the traffic jam, my mum was late for work." },
-            { en: "traffic sign", nl: "verkeersbord", sentence: "What do the traffic signs tell us?" },
-            { en: "to cross", nl: "oversteken", sentence: "You can use the zebra crossing to cross the street here." },
-            { en: "to follow", nl: "volgen", sentence: "Follow me to the park." },
-            { en: "to turn", nl: "draaien", sentence: "You are not allowed to turn here." },
-            { en: "Can you tell me how to get to ...?", nl: "Hoe kom ik bij ...?", sentence: "Can you tell me how to get to the fire station?" },
-            { en: "Can you tell me the way to ...?", nl: "Wat is de weg naar ...?", sentence: "Can you tell me the way to the museum?" },
-            { en: "I'm sorry, I can't help you.", nl: "Sorry, ik kan je niet helpen.", sentence: "I'm sorry, I can't help you to find the town hall." },
-            { en: "Take the first street on your ...", nl: "Neem de eerste straat ...", sentence: "Take the first street on your left." },
-            { en: "bird migration", nl: "vogeltrek", sentence: "Bird migration is often in autumn or early winter." },
-            { en: "lyrics", nl: "liedtekst", sentence: "He wrote down the lyrics to his love song." },
-            { en: "to navigate", nl: "navigeren, de weg vinden", sentence: "Sometimes people used a compass to navigate." }
-        ];
-
-        const trainerRoot = document.getElementById('trainer-root');
-
-        unitSixWords.forEach(item => {
-            const row = document.createElement('div');
-            row.className = 'word-row';
-
-            const colEn = document.createElement('div');
-            colEn.className = 'col-en';
-            colEn.onclick = () => colEn.classList.toggle('is-hidden');
-            colEn.innerHTML = `
-                <div class="word-text">${item.en}</div>
-                <div class="example-sentence">${item.sentence}</div>
-                <div class="blindfold">🙈 BEDEKT</div>
-            `;
-
-            const colNl = document.createElement('div');
-            colNl.className = 'col-nl';
-            colNl.onclick = () => colNl.classList.toggle('is-hidden');
-            colNl.innerHTML = `
-                <div class="word-text">${item.nl}</div>
-                <div class="blindfold">🙈 BEDEKT</div>
-            `;
-
-            row.appendChild(colEn);
-            row.appendChild(colNl);
-            trainerRoot.appendChild(row);
-        });
     </script>
+
 </body>
 </html>
