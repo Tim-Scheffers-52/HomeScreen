@@ -7,20 +7,19 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
 
-        body {
+        /* Basis-styling voor jouw portaal */
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eef2f7;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            background-color: #f0f4f8;
+            color: #333333;
         }
 
-        /* Header Styling */
-        header {
-            background-color: #0d2c54;
-            color: white;
+        /* Donkerblauwe CBS De Eendragt bovenbalk */
+        .main-header {
+            background-color: #0d3c6c;
+            color: #ffffff;
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
@@ -28,147 +27,330 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .header-left h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
+        .main-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .main-header p { margin: 5px 0 0 0; font-size: 14px; color: #b0cbe8; }
 
-        .header-left p {
-            margin: 5px 0 0 0;
-            font-size: 14px;
-            color: #a3b8cc;
-        }
-
-        .profile-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .profile-pic {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ffffff;
-        }
-
-        /* Grid Container - Garandeert horizontale verdeling */
-        .container {
-            max-width: 1400px;
+        /* Het grid voor alle tegels op je website */
+        .grid-container {
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
-            flex-grow: 1;
-            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
             box-sizing: border-box;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+        /* Standaard tegel styling (matcht met jouw lay-out) */
+        .tile {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            box-sizing: border-box;
+        }
+        .tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
-        /* Card Styling */
-        .card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            text-align: center;
-            padding: 25px 15px;
-            text-decoration: none;
-            color: #333;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        .tile-icon { font-size: 50px; margin-bottom: 10px; }
+        .tile-title { margin: 10px 0 0 0; font-size: 18px; color: #0d3c6c; font-weight: 600; }
+
+        /* Randkleuren per tegel (zoals in jouw voorbeelden) */
+        .border-snappet { border: 3px solid #ff7a00; }
+        .border-rekenen { border: 3px solid #00a3a3; }
+        .border-automatiseren { border: 3px solid #333333; }
+        .border-spelling { border: 3px solid #333333; }
+        .border-taal { border: 3px solid #7f56d9; }
+        .border-engels { border: 3px solid #7f56d9; } /* Paars, net als taal */
+        .border-faqta { border: 3px solid #2b6cb0; }
+        .border-topo { border: 3px solid #3182ce; }
+
+
+        /* ==================================================================
+           INTERACTIEVE ENGELSE TOOL (MODAL POP-UP) TIMING & STYLING 
+           ================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none; /* Standaard onzichtbaar */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #f0f4f8;
+            width: 95%;
+            max-width: 1100px;
+            height: 90vh;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             display: flex;
             flex-direction: column;
+            animation: popUp 0.25s ease-out;
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Tool Bovenbalk */
+        .tool-header {
+            background-color: #0d3c6c;
+            color: #ffffff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .tool-header h2 { margin: 0; font-size: 20px; }
+        
+        .close-btn {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .close-btn:hover { background-color: #b91c1c; }
+
+        /* Scrollbare lijst met woorden */
+        .tool-body {
+            padding: 25px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+            border-left: 5px solid #7f56d9;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .word-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .word-row {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+        }
+
+        .col-en, .col-nl {
+            width: 50%;
+            padding: 15px 20px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: background-color 0.15s;
+        }
+        .col-en { border-right: 2px dashed #e2e8f0; background-color: #ffffff; }
+        .col-nl { background-color: #f8fafc; }
+        .col-en:hover { background-color: #f8fafc; }
+        .col-nl:hover { background-color: #f1f5f9; }
+
+        .word-text { font-size: 17px; font-weight: 700; color: #0d3c6c; margin-bottom: 3px; }
+        .col-nl .word-text { color: #2c5282; font-style: italic; font-weight: 600; }
+        .example-sentence { font-size: 12px; color: #64748b; line-height: 1.4; }
+
+        /* Blindering / Oprolsysteem */
+        .blindfold {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #1e293b;
+            color: #94a3b8;
+            display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid transparent;
-            box-sizing: border-box;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        /* Unieke randkleuren per vak */
-        .card-snappet { border-color: #ff9f43; }
-        .card-rekenen { border-color: #feca57; }
-        .card-automatiseren { border-color: #ff6b6b; }
-        .card-spelling { border-color: #54a0ff; }
-        .card-taal { border-color: #a55eea; }
-        .card-faqta { border-color: #48dbfb; }
-        .card-topografie { border-color: #1dd1a1; }
-
-        .card img {
-            height: 70px;
-            max-width: 100%;
-            object-fit: contain;
-            margin-bottom: 20px;
-        }
-
-        .card span {
-            font-size: 18px;
             font-weight: 600;
-            color: #0d2c54;
+            font-size: 13px;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.1s ease;
         }
+        .is-hidden .blindfold { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-left">
+    <div class="main-header">
+        <div>
             <h1>CBS De Eendragt</h1>
             <p>Lef • Liefde • Leren • Leuk</p>
         </div>
-        <div class="profile-area">
-            <img src="profiel.jpg" alt="Profielfoto" class="profile-pic">
+    </div>
+
+    <div class="grid-container">
+        
+        <a href="https://snappet.org" target="_blank" class="tile border-snappet">
+            <div class="tile-icon">🚀</div>
+            <div class="tile-title">Snappet</div>
+        </a>
+
+        <a href="rekenen.html" class="tile border-rekenen">
+            <div class="tile-icon">➕</div>
+            <div class="tile-title">Rekenen</div>
+        </a>
+
+        <a href="Automatiseren.html" class="tile border-automatiseren">
+            <div class="tile-icon">🧠</div>
+            <div class="tile-title">Automatiseren</div>
+        </a>
+
+        <a href="SpellingOefenen.html" class="tile border-spelling">
+            <div class="tile-icon">🐒</div>
+            <div class="tile-title">Spellingoefenen</div>
+        </a>
+
+        <a href="TaalOefenen.html" class="tile border-taal">
+            <div class="tile-icon">🐙</div>
+            <div class="tile-title">Taaloefenen</div>
+        </a>
+
+        <a href="Faqta.html" class="tile border-faqta">
+            <div class="tile-icon">🔶</div>
+            <div class="tile-title">Faqta</div>
+        </a>
+
+        <a href="topografie.html" class="tile border-topo">
+            <div class="tile-icon">🌍</div>
+            <div class="tile-title">Topografie</div>
+        </a>
+
+        <div class="tile border-engels" onclick="openEnglishTool()">
+            <div class="tile-icon">🇬🇧</div>
+            <div class="tile-title">Engels</div>
         </div>
-    </header>
 
-    <div class="container">
-        <div class="grid">
+    </div>
+
+
+    <div class="modal-overlay" id="english-modal">
+        <div class="modal-content">
             
-            <a href="https://snappet.org" target="_blank" class="card card-snappet">
-                <img src="SNAPPET.jpeg" alt="Snappet">
-                <span>Snappet</span>
-            </a>
+            <div class="tool-header">
+                <h2>🇬🇧 Engels Oefenportaal • Unit 6: Word List</h2>
+                <button class="close-btn" onclick="closeEnglishTool()">✖ Sluiten</button>
+            </div>
 
-            <a href="rekenen-keuze.html" class="card card-rekenen">
-                <img src="Rekenen.jpeg" alt="Rekenen">
-                <span>Rekenen</span>
-            </a>
+            <div class="tool-body">
+                <div class="info-card">
+                    <strong>💡 Hoe werkt het?</strong> Klik op een Engels of Nederlands vakje om het woord te <b>verbergen</b>. Zo kun je jezelf of een klasgenootje makkelijk overhoren! Klik er nogmaals op om het weer te tonen.
+                </div>
 
-            <a href="tafels/" class="card card-automatiseren">
-                <img src="Automatiseren.jpeg" alt="Automatiseren">
-                <span>Automatiseren</span>
-            </a>
-
-            <a href="https://www.spellingoefenen.nl" target="_blank" class="card card-spelling">
-                <img src="spellinglogo.png" alt="Spellingoefenen">
-                <span>Spellingoefenen</span>
-            </a>
-
-            <a href="https://www.taaloefenen.nl" target="_blank" class="card card-taal">
-                <img src="SO logo.jpeg" alt="Taaloefenen">
-                <span>Taaloefenen</span>
-            </a>
-
-            <a href="https://www.faqta.nl" target="_blank" class="card card-faqta">
-                <img src="Faqta logo.png" alt="Faqta">
-                <span>Faqta</span>
-            </a>
-
-            <a href="topografie.html" class="card card-topografie">
-                <img src="Topografie.png" alt="Topografie">
-                <span>Topografie</span>
-            </a>
+                <div class="word-list-container" id="trainer-root">
+                    </div>
+            </div>
 
         </div>
     </div>
 
+    <script>
+        // Functies om het venster te openen en te sluiten
+        function openEnglishTool() {
+            document.getElementById('english-modal').style.display = 'flex';
+        }
+
+        function closeEnglishTool() {
+            document.getElementById('english-modal').style.display = 'none';
+        }
+
+        // Alle 33 items van Rubens Unit 6 bladen keurig ingebouwd
+        const unitSixWords = [
+            { en: "building", nl: "gebouw", sentence: "The buildings look like sailing boats." },
+            { en: "by bike", nl: "met de fiets, op de fiets", sentence: "We go to town by bike." },
+            { en: "by car", nl: "met de auto", sentence: "My mum is taking me to school by car because of the heavy rain." },
+            { en: "church", nl: "kerk", sentence: "The church was built hundreds of years ago." },
+            { en: "crossroads", nl: "kruising", sentence: "Watch out carefully when you cross the crossroads!" },
+            { en: "distance", nl: "afstand", sentence: "The road sign gives the distance to the city centre." },
+            { en: "far away", nl: "ver weg", sentence: "I can't see it, it is too far away." },
+            { en: "fire station", nl: "brandweerkazerne", sentence: "The fire fighters are gathered at the fire station." },
+            { en: "left", nl: "links", sentence: "We have to turn left to get to the railway station." },
+            { en: "library", nl: "bibliotheek", sentence: "I go to the library to get books every week." },
+            { en: "map", nl: "kaart, plattegrond", sentence: "We use a map to find our way." },
+            { en: "on foot", nl: "te voet, lopend", sentence: "We like to go to town on foot." },
+            { en: "park", nl: "park", sentence: "We like to picnic in the park on sunny days." },
+            { en: "police station", nl: "politiebureau", sentence: "The police cars are in front of the police station." },
+            { en: "public transport", nl: "openbaar vervoer", sentence: "Buses are forms of public transport." },
+            { en: "railway station", nl: "treinstation", sentence: "Hundreds of trains a day pass through the railway station." },
+            { en: "right", nl: "rechts", sentence: "Look right to see if it is safe to cross the street." },
+            { en: "road", nl: "weg", sentence: "We are on a road to nowhere." },
+            { en: "roundabout", nl: "rotonde", sentence: "There is not much traffic on the roundabout." },
+            { en: "straight on", nl: "rechtdoor", sentence: "Go straight on to the end of the road." },
+            { en: "town hall", nl: "gemeentehuis, stadhuis", sentence: "We went to the town hall to get new passports." },
+            { en: "traffic jam", nl: "file, verkeersopstopping", sentence: "Because of the traffic jam, my mum was late for work." },
+            { en: "traffic sign", nl: "verkeersbord", sentence: "What do the traffic signs tell us?" },
+            { en: "to cross", nl: "oversteken", sentence: "You can use the zebra crossing to cross the street here." },
+            { en: "to follow", nl: "volgen", sentence: "Follow me to the park." },
+            { en: "to turn", nl: "draaien", sentence: "You are not allowed to turn here." },
+            { en: "Can you tell me how to get to ...?", nl: "Hoe kom ik bij ...?", sentence: "Can you tell me how to get to the fire station?" },
+            { en: "Can you tell me the way to ...?", nl: "Wat is de weg naar ...?", sentence: "Can you tell me the way to the museum?" },
+            { en: "I'm sorry, I can't help you.", nl: "Sorry, ik kan je niet helpen.", sentence: "I'm sorry, I can't help you to find the town hall." },
+            { en: "Take the first street on your ...", nl: "Neem de eerste straat ...", sentence: "Take the first street on your left." },
+            { en: "bird migration", nl: "vogeltrek", sentence: "Bird migration is often in autumn or early winter." },
+            { en: "lyrics", nl: "liedtekst", sentence: "He wrote down the lyrics to his love song." },
+            { en: "to navigate", nl: "navigeren, de weg vinden", sentence: "Sometimes people used a compass to navigate." }
+        ];
+
+        const trainerRoot = document.getElementById('trainer-root');
+
+        // Bouw de rijen dynamisch op bij het laden van de pagina
+        unitSixWords.forEach(item => {
+            const row = document.createElement('div');
+            row.className = 'word-row';
+
+            // Engels blok
+            const colEn = document.createElement('div');
+            colEn.className = 'col-en';
+            colEn.onclick = () => colEn.classList.toggle('is-hidden');
+            colEn.innerHTML = `
+                <div class="word-text">${item.en}</div>
+                <div class="example-sentence">${item.sentence}</div>
+                <div class="blindfold">🙈 BEDEKT</div>
+            `;
+
+            // Nederlands blok
+            const colNl = document.createElement('div');
+            colNl.className = 'col-nl';
+            colNl.onclick = () => colNl.classList.toggle('is-hidden');
+            colNl.innerHTML = `
+                <div class="word-text">${item.nl}</div>
+                <div class="blindfold">🙈 BEDEKT</div>
+            `;
+
+            row.appendChild(colEn);
+            row.appendChild(colNl);
+            trainerRoot.appendChild(row);
+        });
+    </script>
 </body>
 </html>
