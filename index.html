@@ -15,7 +15,7 @@
             color: #333333;
         }
 
-        /* Donkerblauwe CBS De Eendragt bovenbalk */
+        /* Originele donkerblauwe bovenbalk van CBS De Eendragt */
         .main-header {
             background-color: #0d3c6c;
             color: #ffffff;
@@ -29,29 +29,33 @@
         .main-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
         .main-header p { margin: 5px 0 0 0; font-size: 14px; color: #b0cbe8; }
 
-        /* Het grid voor alle tegels */
+        /* Grid voor de tegels */
         .grid-container {
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 25px;
             box-sizing: border-box;
         }
 
-        /* Standaard tegel styling */
+        /* Herstelde tegel styling met vaste hoogte voor logo's */
         .tile {
             background: #ffffff;
             border-radius: 16px;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.04);
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
             text-decoration: none;
             color: inherit;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 200px;
             box-sizing: border-box;
         }
         .tile:hover {
@@ -59,15 +63,36 @@
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
-        .tile-icon { font-size: 50px; margin-bottom: 10px; }
+        /* CSS om de echte logo's perfect te schalen binnen de tegels */
+        .tile-img-container {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tile img {
+            max-width: 100%;
+            max-height: 90px;
+            object-fit: contain;
+        }
+
+        /* Grote emoji vlag voor de nieuwe Engelse tegel */
+        .tile-emoji {
+            font-size: 60px;
+            line-height: 90px;
+        }
+
         .tile-title { margin: 10px 0 0 0; font-size: 18px; color: #0d3c6c; font-weight: 600; }
 
-        /* De exacte randkleuren van jouw website */
+        /* Exacte randkleuren per toepassing */
         .border-orange { border: 3px solid #ff7a00; }
         .border-teal { border: 3px solid #00a3a3; }
         .border-dark { border: 3px solid #333333; }
         .border-purple { border: 3px solid #7f56d9; }
         .border-blue { border: 3px solid #3182ce; }
+
 
         /* ==================================================================
            INTERACTIEVE ENGELSE TOOL (MODAL POP-UP) STYLING 
@@ -187,7 +212,7 @@
             letter-spacing: 1px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.1s ease;
+            transition: opacity 0.15s ease;
         }
         .is-hidden .blindfold { opacity: 1; pointer-events: auto; }
     </style>
@@ -204,42 +229,42 @@
     <div class="grid-container">
         
         <a href="https://snappet.org" target="_blank" class="tile border-orange">
-            <div class="tile-icon">🚀</div>
+            <div class="tile-img-container"><img src="SNAPPET.jpeg" alt="Snappet"></div>
             <div class="tile-title">Snappet</div>
         </a>
 
         <a href="rekenen.html" class="tile border-teal">
-            <div class="tile-icon">➕</div>
+            <div class="tile-img-container"><img src="Rekenen.jpeg" alt="Rekenen"></div>
             <div class="tile-title">Rekenen</div>
         </a>
 
         <a href="Automatiseren.html" class="tile border-dark">
-            <div class="tile-icon">🧠</div>
+            <div class="tile-img-container"><img src="Automatiseren.jpeg" alt="Automatiseren"></div>
             <div class="tile-title">Automatiseren</div>
         </a>
 
         <a href="SpellingOefenen.html" class="tile border-dark">
-            <div class="tile-icon">🐒</div>
+            <div class="tile-img-container"><img src="SO logo.jpeg" alt="Spellingoefenen"></div>
             <div class="tile-title">Spellingoefenen</div>
         </a>
 
         <a href="TaalOefenen.html" class="tile border-purple">
-            <div class="tile-icon">🐙</div>
+            <div class="tile-img-container"><img src="TO logo.png" alt="Taaloefenen"></div>
             <div class="tile-title">Taaloefenen</div>
         </a>
 
         <a href="Faqta.html" class="tile border-blue">
-            <div class="tile-icon">🔶</div>
+            <div class="tile-img-container"><img src="Faqta logo.png" alt="Faqta"></div>
             <div class="tile-title">Faqta</div>
         </a>
 
         <a href="topografie.html" class="tile border-blue">
-            <div class="tile-icon">🌍</div>
+            <div class="tile-img-container"><img src="Topografie.png" alt="Topografie"></div>
             <div class="tile-title">Topografie</div>
         </a>
 
         <div class="tile border-purple" onclick="openEnglishTool()">
-            <div class="tile-icon">🇬🇧</div>
+            <div class="tile-img-container"><div class="tile-emoji">🇬🇧</div></div>
             <div class="tile-title">Engels</div>
         </div>
 
@@ -275,7 +300,7 @@
             document.getElementById('english-modal').style.display = 'none';
         }
 
-        // De woordenlijst van Ruben
+        // De complete woordenlijst van Ruben (Unit 6)
         const unitSixWords = [
             { en: "building", nl: "gebouw", sentence: "The buildings look like sailing boats." },
             { en: "by bike", nl: "met de fiets, op de fiets", sentence: "We go to town by bike." },
