@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBS De Eendragt - Scoren!</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
+        .main-header {
+            background-color: #0d3c6c;
+            color: #ffffff;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .main-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        
+        .back-btn {
+            background-color: #00a3a3;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.15s;
+        }
+        .back-btn:hover { background-color: #008282; }
+
+        .content-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        h2 { color: #0d3c6c; margin-top: 0; }
+        p { font-size: 16px; line-height: 1.6; color: #4a5568; }
+
+        .score-img {
+            max-width: 250px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-header">
+        <h1>🎯 Scoren! - CBS De Eendragt</h1>
+        <a href="index.html" class="back-btn">⬅ Terug naar Home</a>
+    </div>
+
+    <div class="content-container">
+        <img src="spellinglogo.png" alt="Scoren logo" class="score-img">
+        <h2>Welkom bij Scoren!</h2>
+        <p>Dit onderdeel is nu klaar voor gebruik. Klik op de oranje knop hieronder om direct in te loggen en te starten.</p>
+        <br>
+        <a href="https://snappet.org" target="_blank" class="back-btn" style="background-color: #ff7a00; font-size: 18px; padding: 15px 30px;">🚀 Open Snappet & Start</a>
+    </div>
+
+</body>
+</html>
