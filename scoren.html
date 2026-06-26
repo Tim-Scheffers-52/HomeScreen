@@ -3,229 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBS De Eendragt - Scoren! (Breuken, Procenten & Verhoudingen)</title>
+    <title>Scoren! - CBS De Eendragt</title>
     <style>
+        :root {
+            --primary: #0d3c6c;
+            --secondary: #00a3a3;
+            --accent: #ff7a00;
+            --bg: #eef2f7;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
         body {
             margin: 0; padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            color: #333333;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: #333;
             display: flex;
             flex-direction: column;
-            align-items: center;
             min-height: 100vh;
+            user-select: none;
         }
 
         .main-header {
-            background-color: #0d3c6c;
-            color: #ffffff;
-            padding: 20px 40px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 100%;
-            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .main-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .main-header h1 { margin: 0; font-size: 22px; font-weight: 600; }
         
         .back-btn {
-            background-color: #00a3a3;
+            background: var(--secondary);
             color: white;
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 8px;
             font-weight: bold;
-            transition: background 0.15s;
+            transition: all 0.2s;
         }
-        .back-btn:hover { background-color: #008282; }
+        .back-btn:hover { background: #008282; transform: translateY(-1px); }
 
-        .game-container {
-            max-width: 900px;
+        .game-area {
+            flex: 1;
+            max-width: 1000px;
             width: 95%;
-            margin: 30px auto;
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        .stats {
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #0d3c6c;
-            background: #e2e8f0;
-            padding: 12px;
-            border-radius: 8px;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
         }
 
-        .ball-question {
-            background: #ff7a00;
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
-            padding: 20px 40px;
-            border-radius: 50px;
-            display: inline-block;
-            margin: 20px 0;
-            box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
-            min-width: 150px;
-        }
-
-        .goals-container {
+        .scoreboard {
             display: flex;
             justify-content: space-between;
-            gap: 40px;
-            margin: 30px 0;
+            background: #f8fafc;
+            padding: 15px 40px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
         }
 
-        .goal {
+        .score-val { color: var(--accent); font-size: 22px; }
+
+        .field {
             flex: 1;
-            border: 4px dashed #00a3a3;
-            background-color: #f8fafc;
-            border-radius: 12px;
-            padding: 30px 15px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #0d3c6c;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            min-height: 100px;
+            background: #linear-gradient(to bottom, #115e59, #134e4a); /* Voetbalveld vibe optioneel, we houden het clean */
+            background-color: #fafafa;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            min-height: 450px;
+        }
+
+        .goals-layer {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            gap: 40px;
+            margin-top: 10px;
+        }
+
+        .soccer-goal {
+            flex: 1;
+            height: 140px;
+            border: 5px solid #cbd5e1;
+            border-bottom: none;
+            background: rgba(241, 245, 249, 0.8);
+            border-radius: 12px 12px 0 0;
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.03);
+            transition: all 0.2s;
         }
 
-        .goal:hover {
-            background-color: #e6fffa;
+        /* Doelnet effect */
+        .soccer-goal::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(white 2px, transparent 2px), linear-gradient(90deg, white 2px, transparent 2px);
+            background-size: 15px 15px;
+            opacity: 0.15;
+            border-radius: 8px 8px 0 0;
+            z-index: 1;
+        }
+
+        .soccer-goal .label { z-index: 2; text-shadow: 0 2px 4px rgba(255,255,255,0.8); }
+        .soccer-goal .sub { font-size: 14px; color: #64748b; font-weight: normal; margin-top: 4px; z-index: 2; }
+
+        .soccer-goal.drag-over {
+            background: #ccfbf1;
+            border-color: var(--secondary);
             transform: scale(1.02);
         }
 
-        .goal span {
-            font-size: 16px;
-            color: #64748b;
-            font-weight: normal;
-            margin-top: 5px;
+        .ball-zone {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 180px;
+            width: 100%;
         }
 
-        .feedback {
-            font-size: 20px;
+        .ball {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #ff9d42, var(--accent));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
             font-weight: bold;
-            margin-top: 15px;
-            height: 30px;
+            box-shadow: 0 10px 20px rgba(255, 122, 0, 0.4);
+            cursor: grab;
+            transition: transform 0.1s;
+            z-index: 10;
+            touch-action: none;
         }
-        .correct { color: #10b981; }
-        .wrong { color: #ef4444; }
+
+        .ball:active { cursor: grabbing; transform: scale(1.05); }
+
+        .feedback-overlay {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            font-size: 48px;
+            font-weight: 900;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .feedback-overlay.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .feedback-overlay.success { color: var(--success); text-shadow: 0 4px 10px rgba(16,185,129,0.3); }
+        .feedback-overlay.error { color: var(--error); text-shadow: 0 4px 10px rgba(239,68,68,0.3); }
+
+        .explainer {
+            font-size: 16px;
+            color: #64748b;
+            margin-bottom: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
     <div class="main-header">
-        <h1>🎯 Scoren! - Procenten, Breuken & Verhoudingen</h1>
+        <h1>🎯 Scoren! - Breuken, Procenten & Verhoudingen</h1>
         <a href="index.html" class="back-btn">⬅ Terug naar Home</a>
     </div>
 
-    <div class="game-container">
-        <div class="stats">
-            <div>Score: <span id="score-display">0</span></div>
-            <div>Opgave: <span id="round-display">1/10</span></div>
+    <div class="game-area">
+        <div class="scoreboard">
+            <div>Score: <span id="score" class="score-val">0</span></div>
+            <div>Opgave: <span id="progress">1 / 10</span></div>
         </div>
 
-        <p style="font-size: 16px; color: #4a5568;">Klik op het juiste doel dat hoort bij de waarde van de oranje kaart!</p>
+        <div class="field">
+            <div class="explainer">Sleep of klik de bal in het juiste doel!</div>
 
-        <div class="ball-question" id="current-question">-</div>
+            <div class="goals-layer">
+                <div class="soccer-goal" id="goalA" data-target="A">
+                    <div class="label">Doel A</div>
+                    <div class="sub">Minder dan de helft (< 50%)</div>
+                </div>
+                <div class="soccer-goal" id="goalB" data-target="B">
+                    <div class="label">Doel B</div>
+                    <div class="sub">De helft of meer (≥ 50%)</div>
+                </div>
+            </div>
 
-        <div class="goals-container">
-            <div class="goal" onclick="checkAnswer('A')">
-                <div id="goal-A-text">Doel A</div>
-                <span id="goal-A-sub">Minder dan de helft</span>
+            <div class="ball-zone">
+                <div class="ball" id="gameBall" draggable="true">-</div>
             </div>
-            <div class="goal" onclick="checkAnswer('B')">
-                <div id="goal-B-text">Doel B</div>
-                <span id="goal-B-sub">De helft of meer</span>
-            </div>
+
+            <div class="feedback-overlay" id="feedback">🎉 GOAL!</div>
         </div>
-
-        <div class="feedback" id="feedback-text"></div>
     </div>
 
     <script>
+        const ball = document.getElementById('gameBall');
+        const goals = document.querySelectorAll('.soccer-goal');
+        const feedback = document.getElementById('feedback');
+        const scoreDisplay = document.getElementById('score');
+        const progressDisplay = document.getElementById('progress');
+
         let score = 0;
-        let currentRound = 1;
-        const totalRounds = 10;
+        let round = 1;
+        const maxRounds = 10;
         let currentItem = {};
 
-        // De lijst met opgaven: een mix van breuken, procenten en verhoudingen
-        const pool = [
-            { question: "25%", target: "A", hint: "Kwart (0,25)" },
-            { question: "3/4", target: "B", hint: "Driekwart (0,75)" },
-            { question: "1 op de 5", target: "A", hint: "20% (0,20)" },
-            { question: "60%", target: "B", hint: "Meer dan de helft (0,60)" },
-            { question: "2 op de 3", target: "B", hint: "Ongeveer 66% (0,66)" },
-            { question: "1/8", target: "A", hint: "12,5% (0,125)" },
-            { question: "50%", target: "B", hint: "Precies de helft" },
-            { question: "40%", target: "A", hint: "Minder dan de helft (0,40)" },
-            { question: "4 op de 5", target: "B", hint: "80% (0,80)" },
-            { question: "7/10", target: "B", hint: "70% (0,70)" },
-            { question: "10%", target: "A", hint: "Een tiende (0,10)" },
-            { question: "1/3", target: "A", hint: "Ongeveer 33% (0,33)" }
+        // Rijke database met opgaven
+        const itemsPool = [
+            { q: "25%", ans: "A", hint: "Kwart" },
+            { q: "3/4", ans: "B", hint: "Driekwart" },
+            { q: "1 op de 5", ans: "A", hint: "20%" },
+            { q: "60%", ans: "B", hint: "Meer dan de helft" },
+            { q: "2 op de 3", ans: "B", hint: "66%" },
+            { q: "1/8", ans: "A", hint: "12,5%" },
+            { q: "50%", ans: "B", hint: "Precies de helft" },
+            { q: "40%", ans: "A", hint: "Minder dan de helft" },
+            { q: "4 op de 5", ans: "B", hint: "80%" },
+            { q: "7/10", ans: "B", hint: "70%" },
+            { q: "10%", ans: "A", hint: "Een tiende" },
+            { q: "1/3", ans: "A", hint: "33%" },
+            { q: "90%", ans: "B", hint: "Bijna alles" },
+            { q: "2/5", ans: "A", hint: "40%" },
+            { q: "3 op de 4", ans: "B", hint: "75%" }
         ];
 
-        function shuffle(array) {
-            return array.sort(() => Math.random() - 0.5);
-        }
+        let activeItems = [];
 
-        let gameQuestions = [];
-
-        function startGame() {
+        function initGame() {
             score = 0;
-            currentRound = 1;
-            gameQuestions = shuffle([...pool]).slice(0, totalRounds);
-            document.getElementById('score-display').innerText = score;
-            nextQuestion();
+            round = 1;
+            scoreDisplay.innerText = score;
+            activeItems = itemsPool.sort(() => Math.random() - 0.5).slice(0, maxRounds);
+            loadRound();
         }
 
-        function nextQuestion() {
-            if (currentRound > totalRounds) {
-                document.getElementById('current-question').innerText = "Goed gedaan!";
-                document.getElementById('feedback-text').className = "correct";
-                document.getElementById('feedback-text').innerText = `Einde spel! Jouw eindscore is ${score} punten.`;
+        function loadRound() {
+            if (round > maxRounds) {
+                ball.style.display = 'none';
+                feedback.className = "feedback-overlay success show";
+                feedback.innerText = `🏆 Uitgespeeld! Score: ${score}`;
+                progressDisplay.innerText = "Einde";
                 return;
             }
-
-            document.getElementById('round-display').innerText = `${currentRound}/${totalRounds}`;
-            document.getElementById('feedback-text').innerText = "";
-            
-            currentItem = gameQuestions[currentRound - 1];
-            document.getElementById('current-question').innerText = currentItem.question;
+            progressDisplay.innerText = `${round} / ${maxRounds}`;
+            currentItem = activeItems[round - 1];
+            ball.innerText = currentItem.q;
+            ball.style.transform = "translate(0px, 0px) scale(1)";
+            feedback.className = "feedback-overlay";
         }
 
-        function checkAnswer(chosenGoal) {
-            if (currentRound > totalRounds) return;
+        // Drag & Drop functionaliteit
+        ball.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', null);
+            ball.style.opacity = "0.7";
+        });
 
-            const feedbackEl = document.getElementById('feedback-text');
-            if (chosenGoal === currentItem.target) {
+        ball.addEventListener('dragend', () => {
+            ball.style.opacity = "1";
+        });
+
+        goals.forEach(goal => {
+            goal.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                goal.classList.add('drag-over');
+            });
+
+            goal.addEventListener('dragleave', () => {
+                goal.classList.remove('drag-over');
+            });
+
+            goal.addEventListener('drop', (e) => {
+                e.preventDefault();
+                goal.classList.remove('drag-over');
+                evaluateChoice(goal.getAttribute('data-target'));
+            });
+
+            // Klikken als fallback/mobiele ondersteuning
+            goal.addEventListener('click', () => {
+                evaluateChoice(goal.getAttribute('data-target'));
+            });
+        });
+
+        function evaluateChoice(choice) {
+            if (choice === currentItem.ans) {
                 score += 10;
-                feedbackEl.className = "correct";
-                feedbackEl.innerText = "🎉 Schitterend gescoord! +10 punten";
-                document.getElementById('score-display').innerText = score;
+                scoreDisplay.innerText = score;
+                feedback.innerText = "⚽ GOAL!!";
+                feedback.className = "feedback-overlay success show";
+                playTone(523.25, 0.15); // C5 geluidje
+                setTimeout(() => playTone(659.25, 0.2), 150); // E5 geluidje
             } else {
-                feedbackEl.className = "wrong";
-                feedbackEl.innerText = `💥 Helaas! Het hoorde in Doel ${currentItem.target} (${currentItem.hint})`;
+                feedback.innerText = "❌ MISSELIJK!";
+                feedback.className = "feedback-overlay error show";
+                playTone(196.00, 0.3); // G3 foutgeluidje
             }
 
-            currentRound++;
-            setTimeout(nextQuestion, 2000);
+            round++;
+            setTimeout(loadRound, 1500);
         }
 
-        // Start het spel direct bij het laden van de pagina
-        window.onload = startGame;
+        // Eenvoudige Web Audio synthesizer voor in-game geluidjes zonder bestanden
+        function playTone(freq, duration) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        window.onload = initGame;
     </script>
 </body>
 </html>
