@@ -92,7 +92,7 @@
         .border-blue { border: 3px solid #3182ce; }
 
         /* ==================================================================
-           INTERACTIEVE ENGELSE TOOL POP-UP STYLING 
+           POP-UP (MODAL) STYLING VOOR REKENEN & ENGELS
            ================================================================== */
         .modal-overlay {
             position: fixed;
@@ -116,6 +116,13 @@
             display: flex;
             flex-direction: column;
             animation: popUp 0.25s ease-out;
+        }
+
+        /* Specifieke kleine popup voor het Rekenen-keuzemenu */
+        #rekenen-modal .modal-content {
+            max-width: 600px;
+            height: auto;
+            max-height: 80vh;
         }
 
         @keyframes popUp {
@@ -151,6 +158,32 @@
             flex-grow: 1;
         }
 
+        /* Rekenen Menu Knoppen */
+        .rekenen-menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px 10px;
+        }
+        .rekenen-btn {
+            background: white;
+            border: 3px solid #00a3a3;
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #0d3c6c;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.15s, background-color 0.15s;
+        }
+        .rekenen-btn:hover {
+            transform: scale(1.02);
+            background-color: #f0fdfa;
+        }
+
+        /* Engels lijst styling */
         .info-card {
             background: #ffffff;
             border-radius: 12px;
@@ -230,10 +263,10 @@
             <div class="tile-title">Snappet</div>
         </a>
 
-        <a href="rekenen.html" class="tile border-teal">
+        <div class="tile border-teal" onclick="openRekenenMenu()">
             <div class="tile-img-container"><img src="Rekenen.jpeg" alt="Rekenen"></div>
             <div class="tile-title">Rekenen</div>
-        </a>
+        </div>
 
         <a href="Automatiseren.html" class="tile border-dark">
             <div class="tile-img-container"><img src="Automatiseren.jpeg" alt="Automatiseren"></div>
@@ -268,6 +301,22 @@
     </div>
 
 
+    <div class="modal-overlay" id="rekenen-modal">
+        <div class="modal-content">
+            <div class="tool-header">
+                <h2>➕ Rekenmenu - Maak je keuze</h2>
+                <button class="close-btn" onclick="closeRekenenMenu()">✖ Sluiten</button>
+            </div>
+            <div class="tool-body">
+                <div class="rekenen-menu-container">
+                    <a href="Scoren%21.html" class="rekenen-btn">🎯 Scoren!</a>
+                    <a href="tafels/" class="rekenen-btn">⛏️ Minecraft spel afronden</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal-overlay" id="english-modal">
         <div class="modal-content">
             
@@ -289,6 +338,14 @@
     </div>
 
     <script>
+        // Functies voor Rekenen Popup
+        function openRekenenMenu() {
+            document.getElementById('rekenen-modal').style.display = 'flex';
+        }
+        function closeRekenenMenu() {
+            document.getElementById('rekenen-modal').style.display = 'none';
+        }
+
         // Functies voor Engels Popup
         function openEnglishTool() {
             document.getElementById('english-modal').style.display = 'flex';
