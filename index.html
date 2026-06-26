@@ -72,77 +72,6 @@
         .card-taal { border-color: #8b5cf6; }
         .card-faqta { border-color: #2563eb; }
         .card-topo { border-color: #059669; }
-        .card-engels { border-color: #a855f7; }
-
-        /* Modal / Keuzemenu Styling */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: #ffffff;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            overflow: hidden;
-            animation: fadeIn 0.2s ease-out;
-        }
-
-        .modal-header {
-            background: #0d3c6c;
-            color: white;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .close-btn {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .modal-body {
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .modal-btn {
-            background: white;
-            border: 3px solid #00a3a3;
-            border-radius: 12px;
-            padding: 20px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #0d3c6c;
-            text-decoration: none;
-            text-align: center;
-            transition: background 0.1s;
-        }
-        .modal-btn:hover {
-            background: #e6fffa;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
     </style>
 </head>
 <body>
@@ -158,10 +87,10 @@
             <div>Snappet</div>
         </a>
 
-        <div class="menu-card card-rekenen" onclick="openRekeningMenu()">
+        <a href="minecraft.html" class="menu-card card-rekenen">
             <img src="Rekenen.jpeg" alt="Rekenen">
             <div>Rekenen</div>
-        </div>
+        </a>
 
         <a href="tafels/" class="menu-card card-automatiseringen">
             <img src="Automatiseren.jpeg" alt="Automatiseren">
@@ -188,28 +117,6 @@
             <div>Topografie</div>
         </a>
     </div>
-
-    <div class="modal-overlay" id="rekenModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span>➕ Rekenmenu - Maak je keuze</span>
-                <button class="close-btn" onclick="closeRekeningMenu()">✖ Sluiten</button>
-            </div>
-            <div class="modal-body">
-                <a href="scoren.html" class="modal-btn">🎯 Scoren!</a>
-                <a href="minecraft.html" class="modal-btn">⛏ Minecraft spel afronden</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openRekeningMenu() {
-            document.getElementById('rekenModal').style.display = 'flex';
-        }
-        function closeRekeningMenu() {
-            document.getElementById('rekenModal').style.display = 'none';
-        }
-    </script>
 
 </body>
 </html>
